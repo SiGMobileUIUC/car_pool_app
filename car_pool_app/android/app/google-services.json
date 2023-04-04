@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "286775143293",
+    "project_id": "carpool-app-29f84",
+    "storage_bucket": "carpool-app-29f84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286775143293:android:c1111919eddf6444343a14",
+        "android_client_info": {
+          "package_name": "io.sigmobile.carpoolapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286775143293-e2jgajt2b031gs7l2qh87dl6hqbtbe1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA39hCt8ReJLnMYbN7pMmud1BhEOqU5y3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286775143293-e2jgajt2b031gs7l2qh87dl6hqbtbe1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
