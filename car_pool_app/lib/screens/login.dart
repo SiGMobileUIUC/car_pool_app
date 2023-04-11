@@ -1,3 +1,4 @@
+import 'package:car_pool_app/screens/signup.dart';
 import 'package:flutter/material.dart';
 //import 'HomePage.dart';
 
@@ -17,18 +18,18 @@ class _LoginDemoState extends State<LoginDemo> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 60.0),
-              child: Center(
-                child: Container(
-                    width: 200,
-                    height: 150,
-                    /*decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('asset/images/flutter-logo.png')),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 60.0),
+            //   child: Center(
+            //     child: Container(
+            //         width: 200,
+            //         height: 150,
+            //         /*decoration: BoxDecoration(
+            //             color: Colors.red,
+            //             borderRadius: BorderRadius.circular(50.0)),*/
+            //         child: Image.asset('asset/images/flutter-logo.png')),
+            //   ),
+            // ),
             Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
@@ -80,9 +81,16 @@ class _LoginDemoState extends State<LoginDemo> {
             SizedBox(
               height: 130,
             ),
-            TextButton (
-              onPressed: (){},
-              child: const Text('New User? Create Account'))
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignupPage(),
+                    ),
+                  );
+                },
+                child: const Text('New User? Create Account'))
           ],
         ),
       ),
