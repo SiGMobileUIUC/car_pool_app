@@ -36,7 +36,8 @@ class _LoginDemoState extends State<LoginDemo> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+                    hintText:
+                        'Enter valid UIUC email id as netid@illinois.edu'),
               ),
             ),
             Padding(
@@ -48,7 +49,7 @@ class _LoginDemoState extends State<LoginDemo> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
-                    hintText: 'Enter secure password'),
+                    hintText: 'Enter UIUC UIN'),
               ),
             ),
             ElevatedButton(
@@ -79,7 +80,9 @@ class _LoginDemoState extends State<LoginDemo> {
             SizedBox(
               height: 130,
             ),
-            Text('New User? Create Account')
+            TextButton (
+              onPressed: (){},
+              child: const Text('New User? Create Account'))
           ],
         ),
       ),
