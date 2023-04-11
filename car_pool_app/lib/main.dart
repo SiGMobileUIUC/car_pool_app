@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CARPOOL APP',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Carpool App'),
-    );
+        title: 'CARPOOL APP',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //home: const MyHomePage(title: 'Carpool App'),
+        home: LoginDemo());
   }
 }
 
