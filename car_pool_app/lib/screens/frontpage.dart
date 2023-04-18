@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:car_pool_app/screens/login.dart';
+import 'package:car_pool_app/screens/signup.dart';
 import 'package:flutter/material.dart';
 
 // class MyApp extends StatelessWidget {
@@ -77,6 +80,10 @@ class HomePage extends StatelessWidget {
                 height: 60,
                 onPressed: () {
                   // handle sign up button press
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignupPage()));
                 },
                 color: Colors.redAccent,
                 shape: RoundedRectangleBorder(
