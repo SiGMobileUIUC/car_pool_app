@@ -11,6 +11,17 @@ void main() {
   runApp(const MyApp());
 }
 
+Future<User> inputData() async {
+  await Firebase.initializeApp();
+
+  debugPrint("UserID");
+
+  return (firebaseAuth.currentUser!);
+  //final   = ;
+  //currColor = color[]
+  //return user_Uuid;
+  // here you write the codes to input the data into firestore
+}
 // class MyApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
