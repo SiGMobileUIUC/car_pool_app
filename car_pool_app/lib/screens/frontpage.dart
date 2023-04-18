@@ -1,3 +1,4 @@
+import 'package:car_pool_app/screens/login.dart';
 import 'package:flutter/material.dart';
 
 // class MyApp extends StatelessWidget {
@@ -40,18 +41,22 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                height: MediaQuery.of(context).size.height / 3,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/Illustration.png')),
-                ),
-              ),
+              // Container(
+              //   height: MediaQuery.of(context).size.height / 3,
+              //   decoration: BoxDecoration(
+              //     image: DecorationImage(
+              //         image: AssetImage('assets/Illustration.png')),
+              //   ),
+              // ),
               MaterialButton(
                 minWidth: double.infinity,
                 height: 60,
                 onPressed: () {
                   // handle login button press
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
                 },
                 color: Colors.indigoAccent[400],
                 shape: RoundedRectangleBorder(
@@ -91,4 +96,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
