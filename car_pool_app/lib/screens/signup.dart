@@ -1,7 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
+
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  String _output = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    _emailController.addListener(() {
+      final String text = _emailController.text;
+      _emailController.value = _emailController.value.copyWith(
+        text: text,
+        selection:
+            TextSelection(baseOffset: text.length, extentOffset: text.length),
+        composing: TextRange.empty,
+      );
+    });
+    _passwordController.addListener(() {
+      final String text = _passwordController.text;
+      _passwordController.value = _passwordController.value.copyWith(
+        text: text,
+        selection:
+            TextSelection(baseOffset: text.length, extentOffset: text.length),
+        composing: TextRange.empty,
+      );
+    });
+    _confirmPasswordController.addListener(() {
+      final String text = _confirmPasswordController.text;
+      _confirmPasswordController.value =
+          _confirmPasswordController.value.copyWith(
+        text: text,
+        selection:
+            TextSelection(baseOffset: text.length, extentOffset: text.length),
+        composing: TextRange.empty,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +115,20 @@ class SignupPage extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       child: Column(
                         children: [
-                          makeInput(label: "Email"),
-                          makeInput(label: "Password", obsureText: true),
-                          makeInput(label: "Confirm Pasword", obsureText: true)
+                          makeInput(
+                            label: "Email",
+                            controller: _emailController,
+                          ),
+                          makeInput(
+                            label: "Password",
+                            obsureText: true,
+                            controller: _passwordController,
+                          ),
+                          makeInput(
+                            label: "Confirm Pasword",
+                            obsureText: true,
+                            controller: _confirmPasswordController,
+                          )
                         ],
                       ),
                     ),
@@ -82,7 +146,50 @@ class SignupPage extends StatelessWidget {
                         child: MaterialButton(
                           minWidth: double.infinity,
                           height: 60,
-                          onPressed: () {},
+                          onPressed: () {
+                            // Send email confirmation link from firebase.
+                            var acs = ActionCodeSettings(
+                                // URL you want to redirect back to. The domain (www.example.com) for this
+                                // URL must be whitelisted in the Firebase Console.
+                                url:
+                                    'https://carpool-app-29f84.firebaseapp.com/',
+                                // This must be true
+                                handleCodeInApp: true,
+                                iOSBundleId: 'com.example.ios',
+                                androidPackageName: 'com.example.android',
+                                // installIfNotAvailable
+                                androidInstallApp: true,
+                                // minimumVersion
+                                androidMinimumVersion: '12');
+
+                            var emailAuth = _emailController.text;
+                            print('Sending to firebase:\t$emailAuth');
+                            var message = 'Message';
+                            FirebaseAuth.instance
+                                .sendSignInLinkToEmail(
+                                    email: emailAuth, actionCodeSettings: acs)
+                                .catchError(
+                              (onError) {
+                                message =
+                                    'Error sending email verification $onError';
+                                print(message);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(message),
+                                ));
+                              },
+                            ).then(
+                              (value) {
+                                message =
+                                    'Successfully sent email verification';
+                                print(message);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(message),
+                                ));
+                              },
+                            );
+                          },
                           color: Colors.redAccent,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40)),
@@ -121,7 +228,7 @@ class SignupPage extends StatelessWidget {
   }
 }
 
-Widget makeInput({label, obsureText = false}) {
+Widget makeInput({label, obsureText = false, controller}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -134,6 +241,7 @@ Widget makeInput({label, obsureText = false}) {
         height: 5,
       ),
       TextField(
+        controller: controller,
         obscureText: obsureText,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),

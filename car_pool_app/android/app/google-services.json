@@ -29,6 +29,13 @@
             {
               "client_id": "286775143293-e2jgajt2b031gs7l2qh87dl6hqbtbe1l.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "286775143293-2n9eb0r72fr1mmu7r6kec3dc364osjnd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.carPoolApp"
+              }
             }
           ]
         }

@@ -4,24 +4,28 @@ import 'screens/signup.dart';
 import 'screens/frontpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
-Future<User> inputData() async {
-  await Firebase.initializeApp();
+// Future<User> inputData() async {
+//   await Firebase.initializeApp();
 
-  debugPrint("UserID");
+//   debugPrint("UserID");
 
-  return (firebaseAuth.currentUser!);
-  //final   = ;
-  //currColor = color[]
-  //return user_Uuid;
-  // here you write the codes to input the data into firestore
-}
+//   return (firebaseAuth.currentUser!);
+//   //final   = ;
+//   //currColor = color[]
+//   //return user_Uuid;
+//   // here you write the codes to input the data into firestore
+// }
 // class MyApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
