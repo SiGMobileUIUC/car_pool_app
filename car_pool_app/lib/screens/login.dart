@@ -55,7 +55,6 @@
 //             ),
 //             ElevatedButton(
 //               onPressed: () {
-//                 //TODO FORGOT PASSWORD SCREEN GOES HERE
 //               },
 //               child: Text(
 //                 'Forgot Password',
@@ -110,13 +109,12 @@ class LoginPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        brightness: Brightness.light,
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               size: 20,
               color: Colors.black,
@@ -132,14 +130,14 @@ class LoginPage extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       "Login",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -149,13 +147,13 @@ class LoginPage extends StatelessWidget {
                         color: Colors.grey[700],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     )
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Column(
                     children: [
                       makeInput(label: "Email"),
@@ -164,12 +162,12 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Container(
-                    padding: EdgeInsets.only(top: 3, left: 3),
+                    padding: const EdgeInsets.only(top: 3, left: 3),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        border: Border(
+                        border: const Border(
                             bottom: BorderSide(color: Colors.black),
                             top: BorderSide(color: Colors.black),
                             right: BorderSide(color: Colors.black),
@@ -181,7 +179,7 @@ class LoginPage extends StatelessWidget {
                       color: Colors.indigoAccent[400],
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40)),
-                      child: Text(
+                      child: const Text(
                         "Login",
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
@@ -191,10 +189,10 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("Dont have an account?"),
@@ -220,15 +218,15 @@ Widget makeInput({label, obsureText = false}) {
     children: [
       Text(
         label,
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
       ),
-      SizedBox(
+      const SizedBox(
         height: 5,
       ),
       TextField(
         obscureText: obsureText,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -240,7 +238,7 @@ Widget makeInput({label, obsureText = false}) {
               ),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         height: 30,
       )
     ],

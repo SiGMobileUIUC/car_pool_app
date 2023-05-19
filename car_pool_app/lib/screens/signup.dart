@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../screens/homepage.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -12,7 +13,8 @@ class _SignupPageState extends State<SignupPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  String _output = '';
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -64,13 +66,12 @@ class _SignupPageState extends State<SignupPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        brightness: Brightness.light,
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               size: 20,
               color: Colors.black,
@@ -78,7 +79,7 @@ class _SignupPageState extends State<SignupPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
             child: Column(
@@ -89,14 +90,14 @@ class _SignupPageState extends State<SignupPage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
+                        const Text(
                           "Sign up",
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Text(
@@ -106,39 +107,42 @@ class _SignupPageState extends State<SignupPage> {
                             color: Colors.grey[700],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         )
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: Column(
-                        children: [
-                          makeInput(
-                            label: "Email",
-                            controller: _emailController,
-                          ),
-                          makeInput(
-                            label: "Password",
-                            obsureText: true,
-                            controller: _passwordController,
-                          ),
-                          makeInput(
-                            label: "Confirm Pasword",
-                            obsureText: true,
-                            controller: _confirmPasswordController,
-                          )
-                        ],
+                    Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: Column(
+                          children: [
+                            makeInput(
+                              label: "Email",
+                              controller: _emailController,
+                            ),
+                            makeInput(
+                              label: "Password",
+                              password: true,
+                              controller: _passwordController,
+                            ),
+                            makeInput(
+                              label: "Confirm Pasword",
+                              password: true,
+                              controller: _confirmPasswordController,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Container(
-                        padding: EdgeInsets.only(top: 3, left: 3),
+                        padding: const EdgeInsets.only(top: 3, left: 3),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40),
-                            border: Border(
+                            border: const Border(
                                 bottom: BorderSide(color: Colors.black),
                                 top: BorderSide(color: Colors.black),
                                 right: BorderSide(color: Colors.black),
@@ -147,53 +151,53 @@ class _SignupPageState extends State<SignupPage> {
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: () {
-                            // Send email confirmation link from firebase.
-                            var acs = ActionCodeSettings(
+                            if (_formKey.currentState!.validate()) {
+                              var emailAuth = _emailController.text;
+
+                              var acs = ActionCodeSettings(
                                 // URL you want to redirect back to. The domain (www.example.com) for this
                                 // URL must be whitelisted in the Firebase Console.
                                 url:
-                                    'https://carpool-app-29f84.firebaseapp.com/',
+                                    'https://carpool-app-29f84.firebaseapp.com/signin',
                                 // This must be true
                                 handleCodeInApp: true,
-                                iOSBundleId: 'com.example.ios',
-                                androidPackageName: 'com.example.android',
+                                iOSBundleId: 'com.sigmobileuiuc.carpoolapp',
+                                androidPackageName:
+                                    'com.sigmobileuiuc.carpoolapp',
                                 // installIfNotAvailable
                                 androidInstallApp: true,
                                 // minimumVersion
-                                androidMinimumVersion: '12');
+                                androidMinimumVersion: '12',
+                              );
 
-                            var emailAuth = _emailController.text;
-                            print('Sending to firebase:\t$emailAuth');
-                            var message = 'Message';
-                            FirebaseAuth.instance
-                                .sendSignInLinkToEmail(
-                                    email: emailAuth, actionCodeSettings: acs)
-                                .catchError(
-                              (onError) {
-                                message =
-                                    'Error sending email verification $onError';
-                                print(message);
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(message),
-                                ));
-                              },
-                            ).then(
-                              (value) {
-                                message =
-                                    'Successfully sent email verification';
-                                print(message);
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(message),
-                                ));
-                              },
-                            );
+                              FirebaseAuth.instance
+                                  .sendSignInLinkToEmail(
+                                      email: emailAuth, actionCodeSettings: acs)
+                                  .catchError((onError) => print(
+                                      'Error sending email verification $onError'))
+                                  .then(
+                                (value) {
+                                  print('Successfully sent email verification');
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomePage(),
+                                    ),
+                                  );
+                                },
+                              );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Email verification link sent.'),
+                                ),
+                              );
+                            }
                           },
                           color: Colors.redAccent,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40)),
-                          child: Text(
+                          child: const Text(
                             "Sign Up",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -203,17 +207,19 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Already have an account? "),
                         Text(
                           "Login",
                           style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
                         ),
                       ],
                     )
@@ -228,22 +234,42 @@ class _SignupPageState extends State<SignupPage> {
   }
 }
 
-Widget makeInput({label, obsureText = false, controller}) {
+Widget makeInput({
+  label,
+  obsureText = false,
+  password = false,
+  required controller,
+}) {
+  String? validatePassword(String? s) {
+    if (s == null || s.isEmpty) {
+      return 'Please enter a password.';
+    }
+    return null;
+  }
+
+  String? validateEmail(String? s) {
+    if (s == null || s.isEmpty) {
+      return 'Please enter a valid email.';
+    }
+    return null;
+  }
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
         label,
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
       ),
-      SizedBox(
+      const SizedBox(
         height: 5,
       ),
-      TextField(
+      TextFormField(
         controller: controller,
-        obscureText: obsureText,
-        decoration: InputDecoration(
+        validator: password ? validatePassword : validateEmail,
+        obscureText: password ? true : false,
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -254,7 +280,7 @@ Widget makeInput({label, obsureText = false, controller}) {
               OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
         ),
       ),
-      SizedBox(
+      const SizedBox(
         height: 30,
       )
     ],
