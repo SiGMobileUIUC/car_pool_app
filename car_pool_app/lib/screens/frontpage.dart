@@ -2,7 +2,6 @@ import 'package:car_pool_app/screens/login.dart';
 import 'package:car_pool_app/screens/signup.dart';
 import 'package:flutter/material.dart';
 
-// Main page when you open the app.
 class FrontPage extends StatelessWidget {
   const FrontPage({Key? key}) : super(key: key);
 
@@ -14,6 +13,8 @@ class FrontPage extends StatelessWidget {
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+          color: Color.fromARGB(
+              255, 175, 175, 175), // Set the background color to light gray
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -21,26 +22,26 @@ class FrontPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
-                    "Hello There!",
+                    "Welcome To UNIRide!",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   Text(
-                    "Welcome to UNIRide, please select one of the following:",
+                    "Your Ride, Your Way.",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey[700], fontSize: 15),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 30),
                   ),
                 ],
               ),
-              // Container(
-              //   height: MediaQuery.of(context).size.height / 3,
-              //   decoration: BoxDecoration(
-              //     image: DecorationImage(
-              //         image: AssetImage('assets/Illustration.png')),
-              //   ),
-              // ),
+              const Text(
+                "🚘",
+                style: TextStyle(fontSize: 200),
+              ),
               Column(
                 children: [
                   MaterialButton(
@@ -49,11 +50,13 @@ class FrontPage extends StatelessWidget {
                     onPressed: () {
                       // handle login button press
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
                     },
-                    color: Colors.indigoAccent[400],
+                    color: Color.fromARGB(255, 0, 32, 91),
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.circular(40),
@@ -82,7 +85,7 @@ class FrontPage extends StatelessWidget {
                         ),
                       );
                     },
-                    color: Colors.redAccent,
+                    color: Color.fromARGB(255, 232, 74, 39),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40)),
                     child: const Text(
@@ -90,6 +93,7 @@ class FrontPage extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
+                        color: Colors.white70,
                       ),
                     ),
                   ),
