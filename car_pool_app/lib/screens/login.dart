@@ -53,7 +53,7 @@ class LoginPage extends StatelessWidget {
       backgroundColor: Colors.grey[200], // Set the background color to a shade of gray
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[200],
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);

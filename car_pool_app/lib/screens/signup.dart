@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../screens/homepage.dart';
+import '../screens/login.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+  const SignupPage({Key? key});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -62,20 +63,20 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[200],
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 20,
-              color: Colors.black,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -89,25 +90,25 @@ class _SignupPageState extends State<SignupPage> {
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Text(
-                          "Sign up",
+                      children: const [
+                        Text(
+                          "Sign Up",
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 40,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 20,
                         ),
                         Text(
-                          "Create an Account,Its free",
+                          "Create a free account.",
                           style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey[700],
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 30,
                         )
                       ],
@@ -128,7 +129,7 @@ class _SignupPageState extends State<SignupPage> {
                               controller: _passwordController,
                             ),
                             makeInput(
-                              label: "Confirm Pasword",
+                              label: "Confirm Password",
                               password: true,
                               controller: _confirmPasswordController,
                             ),
@@ -141,12 +142,14 @@ class _SignupPageState extends State<SignupPage> {
                       child: Container(
                         padding: const EdgeInsets.only(top: 3, left: 3),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            border: const Border(
-                                bottom: BorderSide(color: Colors.black),
-                                top: BorderSide(color: Colors.black),
-                                right: BorderSide(color: Colors.black),
-                                left: BorderSide(color: Colors.black))),
+                          borderRadius: BorderRadius.circular(40),
+                          border: const Border(
+                            bottom: BorderSide(color: Colors.black),
+                            top: BorderSide(color: Colors.black),
+                            right: BorderSide(color: Colors.black),
+                            left: BorderSide(color: Colors.black),
+                          ),
+                        ),
                         child: MaterialButton(
                           minWidth: double.infinity,
                           height: 60,
@@ -194,14 +197,16 @@ class _SignupPageState extends State<SignupPage> {
                               );
                             }
                           },
-                          color: Colors.redAccent,
+                          color: const Color.fromARGB(255, 232, 74, 39),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
                           child: const Text(
                             "Sign Up",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
+                              color: Colors.white70,
                             ),
                           ),
                         ),
@@ -213,12 +218,22 @@ class _SignupPageState extends State<SignupPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account? "),
-                        Text(
-                          "Login",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
+                        const Text("Already have an account? "),
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const LoginPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Login",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Color.fromARGB(255, 0, 32, 91),
+                            ),
                           ),
                         ),
                       ],
@@ -232,57 +247,64 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
-}
 
-Widget makeInput({
-  label,
-  obsureText = false,
-  password = false,
-  required controller,
-}) {
-  String? validatePassword(String? s) {
-    if (s == null || s.isEmpty) {
-      return 'Please enter a password.';
+  Widget makeInput({
+    required String label,
+    bool obsureText = false,
+    bool password = false,
+    required TextEditingController controller,
+  }) {
+    String? validatePassword(String? s) {
+      if (s == null || s.isEmpty) {
+        return 'Please enter a password.';
+      }
+      return null;
     }
-    return null;
-  }
 
-  String? validateEmail(String? s) {
-    if (s == null || s.isEmpty) {
-      return 'Please enter a valid email.';
+    String? validateEmail(String? s) {
+      if (s == null || s.isEmpty) {
+        return 'Please enter a valid school email.';
+      }
+      if (!s.contains('@illinois.edu')) {
+        return 'Please enter a valid school email.';
+      }
+      return null;
     }
-    return null;
-  }
 
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        label,
-        style: const TextStyle(
-            fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      TextFormField(
-        controller: controller,
-        validator: password ? validatePassword : validateEmail,
-        obscureText: password ? true : false,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        TextFormField(
+          controller: controller,
+          validator: password ? validatePassword : validateEmail,
+          obscureText: obsureText,
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.grey,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
             ),
           ),
-          border:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
         ),
-      ),
-      const SizedBox(
-        height: 30,
-      )
-    ],
-  );
+        const SizedBox(
+          height: 30,
+        )
+      ],
+    );
+  }
 }
