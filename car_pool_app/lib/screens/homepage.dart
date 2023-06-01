@@ -8,8 +8,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text('Carpool App'),
+        elevation: 0,
+        backgroundColor: Colors.grey[200],
+        //title: const Text('Carpool App'),
       ),
       body: const Center(
         child: Text(

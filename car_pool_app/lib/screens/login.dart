@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import '../screens/homepage.dart';
-// import '../screens/signup.dart'; 
+// import '../screens/signup.dart';
 
 // class LoginPage extends StatelessWidget {
 //   const LoginPage();
@@ -204,7 +204,6 @@
 //   );
 // }
 
-
 import 'package:car_pool_app/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -319,7 +318,7 @@ class _LoginPageState extends State<LoginPage> {
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: loginUser,
-                          color: const Color.fromARGB(255, 232, 74, 39),
+                          color: Color.fromARGB(255, 0, 32, 91),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40),
                           ),
@@ -334,10 +333,10 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                  ],
-                ),
-                Column(
-                  children: [
+                    //],
+                    //),
+                    //Column(
+                    //children: [
                     const SizedBox(
                       height: 20,
                     ),
@@ -358,7 +357,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
-                              color: Color.fromARGB(255, 0, 32, 91),
+                              color: Color.fromARGB(255, 232, 74, 39),
                             ),
                           ),
                         ),

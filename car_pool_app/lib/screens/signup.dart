@@ -590,7 +590,7 @@ class _SignupPageState extends State<SignupPage> {
           .then((value) {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => const LoginPage(),
           ),
         );
       }).catchError((error) {
