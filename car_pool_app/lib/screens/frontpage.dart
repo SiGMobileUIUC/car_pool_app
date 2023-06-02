@@ -23,7 +23,7 @@ class FrontPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
-                    "Welcome To UNIRide!",
+                    "Welcome To UNIRide 🚘!",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                   ),
                   const SizedBox(
@@ -42,8 +42,8 @@ class FrontPage extends StatelessWidget {
                 ],
               ),
               const Text(
-                "🚘",
-                style: TextStyle(fontSize: 200),
+                "🚗",
+                style: TextStyle(fontSize: 250),
               ),
               Column(
                 children: [

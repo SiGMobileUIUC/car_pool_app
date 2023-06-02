@@ -1,4 +1,97 @@
+// import 'package:flutter/material.dart';
+
+// class HomePage extends StatelessWidget {
+//   const HomePage({
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       resizeToAvoidBottomInset: false,
+//       backgroundColor: Colors.grey[200],
+//       appBar: AppBar(
+//         elevation: 0,
+//         backgroundColor: Colors.grey[200],
+//         title: Text(
+//           'UNIRide 🚘',
+//           style: TextStyle(
+//             fontSize: 50,
+//             fontWeight: FontWeight.bold,
+//             color: Color.fromARGB(255, 0, 0, 0),
+//           ),
+//         ),
+//         centerTitle: true,
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           crossAxisAlignment: CrossAxisAlignment.stretch,
+//           children: [
+//             Text(
+//               'Welcome to UNIRide 🚘!',
+//               style: TextStyle(
+//                 fontSize: 24,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//             SizedBox(height: 16),
+//             Text(
+//               'Your Ride, Your Way.',
+//               style: TextStyle(
+//                         fontWeight: FontWeight.bold,
+//                         color: Color.fromARGB(255, 0, 0, 0),
+//                         fontSize: 20,
+//                         fontStyle: FontStyle.italic,
+//                         ),
+//             ),
+//             SizedBox(height: 24),
+//             Text(
+//               'How to navigate the app:',
+//               style: TextStyle(
+//                 fontSize: 20,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//             SizedBox(height: 12),
+//             Text(
+//               '1. Use the home page to answer any questions.',
+//               style: TextStyle(fontSize: 16),
+//             ),
+//             SizedBox(height: 8),
+//             Text(
+//               '2. Tap on settings to update personal information.',
+//               style: TextStyle(fontSize: 16),
+//             ),
+//             SizedBox(height: 8),
+//             Text(
+//               '3. Tap on ride to make a post as a driver or rider.',
+//               style: TextStyle(fontSize: 16),
+//             ),
+//             SizedBox(height: 8),
+//             Text(
+//               '4. Tap on ride to view current postings.',
+//               style: TextStyle(fontSize: 16),
+//             ),
+//           ],
+//         ),
+//       ),
+//       bottomNavigationBar: BottomNavigationBar(
+//         items: const [
+//           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+//           BottomNavigationBarItem(
+//               icon: Icon(Icons.directions_car), label: 'Ride'),
+//           BottomNavigationBarItem(
+//               icon: Icon(Icons.settings), label: 'Settings'),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
+import 'ride.dart'; // Import the ride.dart file
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -13,12 +106,68 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.grey[200],
-        //title: const Text('Carpool App'),
+        title: Text(
+          'UNIRide 🚘',
+          style: TextStyle(
+            fontSize: 50,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 0, 0, 0),
+          ),
+        ),
+        centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'this is the home page when you\'re signed in',
-          style: TextStyle(fontSize: 20),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Welcome to UNIRide 🚘!',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Your Ride, Your Way.',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 20,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            SizedBox(height: 24),
+            Text(
+              'How to navigate the app:',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 12),
+            Text(
+              '1. Use the home page to answer any questions.',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 8),
+            Text(
+              '2. Tap on settings to update personal information.',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 8),
+            Text(
+              '3. Tap on ride to make a post as a driver or rider.',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 8),
+            Text(
+              '4. Tap on ride to view current postings.',
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -29,6 +178,14 @@ class HomePage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: 'Settings'),
         ],
+        onTap: (int index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RidePage()),
+            );
+          }
+        },
       ),
     );
   }
