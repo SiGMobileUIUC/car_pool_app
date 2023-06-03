@@ -1,4 +1,7 @@
 // import 'package:flutter/material.dart';
+// import 'ride.dart'; 
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:car_pool_app/screens/frontpage.dart';
 
 // class HomePage extends StatelessWidget {
 //   const HomePage({
@@ -11,6 +14,7 @@
 //       resizeToAvoidBottomInset: false,
 //       backgroundColor: Colors.grey[200],
 //       appBar: AppBar(
+//         automaticallyImplyLeading: false,
 //         elevation: 0,
 //         backgroundColor: Colors.grey[200],
 //         title: Text(
@@ -40,11 +44,11 @@
 //             Text(
 //               'Your Ride, Your Way.',
 //               style: TextStyle(
-//                         fontWeight: FontWeight.bold,
-//                         color: Color.fromARGB(255, 0, 0, 0),
-//                         fontSize: 20,
-//                         fontStyle: FontStyle.italic,
-//                         ),
+//                 fontWeight: FontWeight.bold,
+//                 color: Color.fromARGB(255, 0, 0, 0),
+//                 fontSize: 20,
+//                 fontStyle: FontStyle.italic,
+//               ),
 //             ),
 //             SizedBox(height: 24),
 //             Text(
@@ -85,18 +89,35 @@
 //           BottomNavigationBarItem(
 //               icon: Icon(Icons.settings), label: 'Settings'),
 //         ],
+//         onTap: (int index) {
+//           if (index == 1) {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => RidePage()),
+//             );
+//           }
+//         },
 //       ),
 //     );
 //   }
 // }
-
+import 'package:car_pool_app/screens/ride.dart';
 import 'package:flutter/material.dart';
-import 'ride.dart'; // Import the ride.dart file
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:car_pool_app/screens/frontpage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
+
+  void signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => FrontPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +125,7 @@ class HomePage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.grey[200],
         title: Text(
@@ -115,6 +137,12 @@ class HomePage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () => signOut(context),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

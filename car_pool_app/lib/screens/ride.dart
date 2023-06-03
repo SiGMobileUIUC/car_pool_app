@@ -8,6 +8,8 @@ class RidePage extends StatefulWidget {
 class _RidePageState extends State<RidePage> {
   List<String> postings = [];
 
+  int _currentIndex = 1; // Current index for the bottom navigation bar
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,6 +85,26 @@ class _RidePageState extends State<RidePage> {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.directions_car), label: 'Ride'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Settings'),
+        ],
+        onTap: (int index) {
+          if (index == 0) {
+            Navigator.popUntil(context, ModalRoute.withName('/'));
+          } else if (index == 2) {
+            // Handle settings navigation
+            // You can replace this with your desired logic for the Settings page
+            Navigator.pushNamed(context, '/settings');
+          }
+        },
+      ),
     );
   }
 }
+
