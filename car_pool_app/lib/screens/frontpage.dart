@@ -15,7 +15,7 @@ class FrontPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           // color: Color.fromARGB(
           //     255, 175, 175, 175),
-          color: Colors.grey[200], 
+          color: Colors.grey[200],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -33,11 +33,11 @@ class FrontPage extends StatelessWidget {
                     "Your Ride, Your Way.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 30,
-                        fontStyle: FontStyle.italic,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontSize: 30,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ],
               ),
@@ -109,6 +109,3 @@ class FrontPage extends StatelessWidget {
     );
   }
 }
-
-
-
