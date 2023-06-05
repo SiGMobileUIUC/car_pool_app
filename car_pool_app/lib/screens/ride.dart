@@ -108,6 +108,7 @@
 //   }
 // }
 
+import 'package:car_pool_app/screens/account.dart';
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 
@@ -203,7 +204,9 @@ class _RidePageState extends State<RidePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.directions_car), label: 'Ride'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
+          ),
         ],
         onTap: (int index) {
           if (index == 0) {
@@ -212,14 +215,13 @@ class _RidePageState extends State<RidePage> {
               MaterialPageRoute(builder: (context) => HomePage()),
             );
           } else if (index == 2) {
-            // Handle settings navigation
-            // You can replace this with your desired logic for the Settings page
-            Navigator.pushNamed(context, '/settings');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AccountScreen()),
+            );
           }
         },
       ),
     );
   }
 }
-
-

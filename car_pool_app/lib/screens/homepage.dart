@@ -1,12 +1,20 @@
+// import 'package:car_pool_app/screens/ride.dart';
 // import 'package:flutter/material.dart';
-// import 'ride.dart'; 
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:car_pool_app/screens/frontpage.dart';
 
 // class HomePage extends StatelessWidget {
 //   const HomePage({
-//     super.key,
-//   });
+//     Key? key,
+//   }) : super(key: key);
+
+//   void signOut(BuildContext context) async {
+//     await FirebaseAuth.instance.signOut();
+//     Navigator.pushReplacement(
+//       context,
+//       MaterialPageRoute(builder: (context) => FrontPage()),
+//     );
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -26,6 +34,12 @@
 //           ),
 //         ),
 //         centerTitle: true,
+//         actions: [
+//           IconButton(
+//             icon: Icon(Icons.logout, color: Colors.black,),
+//             onPressed: () => signOut(context),
+//           ),
+//         ],
 //       ),
 //       body: Padding(
 //         padding: const EdgeInsets.all(16.0),
@@ -84,10 +98,8 @@
 //       bottomNavigationBar: BottomNavigationBar(
 //         items: const [
 //           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.directions_car), label: 'Ride'),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.settings), label: 'Settings'),
+//           BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Ride'),
+//           BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account',),
 //         ],
 //         onTap: (int index) {
 //           if (index == 1) {
@@ -101,10 +113,12 @@
 //     );
 //   }
 // }
+
 import 'package:car_pool_app/screens/ride.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:car_pool_app/screens/frontpage.dart';
+import 'package:car_pool_app/screens/account.dart'; // Import the account.dart file
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -139,7 +153,7 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: Icon(Icons.logout, color: Colors.black,),
             onPressed: () => signOut(context),
           ),
         ],
@@ -201,10 +215,8 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.directions_car), label: 'Ride'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
+          BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Ride'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
         ],
         onTap: (int index) {
           if (index == 1) {
@@ -212,9 +224,15 @@ class HomePage extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => RidePage()),
             );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AccountScreen()),
+            );
           }
         },
       ),
     );
   }
 }
+
