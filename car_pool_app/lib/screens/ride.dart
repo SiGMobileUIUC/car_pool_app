@@ -10,6 +10,8 @@ class RidePage extends StatefulWidget {
 }
 
 class _RidePageState extends State<RidePage> {
+  int currentIndex = 1; // Added currentIndex variable
+
   List<String> postings = [];
 
   void signOut(BuildContext context) async {
@@ -39,7 +41,10 @@ class _RidePageState extends State<RidePage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout, color: Colors.black,),
+            icon: Icon(
+              Icons.logout,
+              color: Colors.black,
+            ),
             onPressed: () => signOut(context),
           ),
         ],
@@ -113,13 +118,13 @@ class _RidePageState extends State<RidePage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Ride'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
-        ],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: currentIndex,
         onTap: (int index) {
+          setState(() {
+            currentIndex = index;
+          });
+
           if (index == 0) {
             Navigator.push(
               context,
@@ -133,6 +138,30 @@ class _RidePageState extends State<RidePage> {
           }
         },
       ),
+    );
+  }
+}
+
+// CustomBottomNavigationBar implementation
+class CustomBottomNavigationBar extends StatelessWidget {
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
+  CustomBottomNavigationBar({
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: onTap,
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Ride'),
+        BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
+      ],
     );
   }
 }

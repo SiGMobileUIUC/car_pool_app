@@ -2,124 +2,121 @@ import 'package:car_pool_app/screens/homepage.dart';
 import 'package:car_pool_app/screens/ride.dart';
 import 'package:flutter/material.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
+  @override
+  _AccountScreenState createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  int currentIndex = 2; // Added currentIndex variable
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Account'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              // Handle sign out functionality
+            },
+          ),
+        ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              radius: 50,
-              // You can display the user's profile image here
-              backgroundImage: AssetImage('assets/profile_image.png'),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'John Doe',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    // You can display the user's profile image here
+                    backgroundImage: AssetImage('assets/profile_image.png'),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'John Doe',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'johndoe@example.com',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 8),
-            Text(
-              'johndoe@example.com',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Personal Information',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8),
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Name'),
               subtitle: Text('John Doe'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  // Handle edit name functionality
-                },
-              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Handle edit name functionality
+              },
             ),
             ListTile(
               leading: Icon(Icons.email),
               title: Text('Email'),
               subtitle: Text('johndoe@example.com'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  // Handle edit email functionality
-                },
-              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Handle edit email functionality
+              },
             ),
             ListTile(
               leading: Icon(Icons.lock),
               title: Text('Password'),
               subtitle: Text('********'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  // Handle edit password functionality
-                },
-              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Handle edit password functionality
+              },
             ),
             SizedBox(height: 16),
-            Text(
-              'Preferences',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            Divider(
+              color: Colors.grey[400],
+              thickness: 1,
+              height: 0,
             ),
-            SizedBox(height: 8),
             ListTile(
               leading: Icon(Icons.location_on),
               title: Text('Home Address'),
               subtitle: Text('123 Main St, City, State'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  // Handle edit home address functionality
-                },
-              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Handle edit home address functionality
+              },
             ),
             ListTile(
               leading: Icon(Icons.directions_car),
               title: Text('Preferred Car Type'),
               subtitle: Text('Sedan'),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  // Handle edit preferred car type functionality
-                },
-              ),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                // Handle edit preferred car type functionality
+              },
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.directions_car), label: 'Ride'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'Account'),
-        ],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: currentIndex,
         onTap: (int index) {
+          setState(() {
+            currentIndex = index;
+          });
+
           if (index == 0) {
             Navigator.push(
               context,
@@ -136,3 +133,30 @@ class AccountScreen extends StatelessWidget {
     );
   }
 }
+
+// CustomBottomNavigationBar implementation
+class CustomBottomNavigationBar extends StatelessWidget {
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
+  CustomBottomNavigationBar({
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: onTap,
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Ride'),
+        BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
+      ],
+      selectedItemColor: Colors.green,
+      unselectedItemColor: Colors.grey,
+    );
+  }
+}
+
