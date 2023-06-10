@@ -17,7 +17,7 @@ class _AccountScreenState extends State<AccountScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => FrontPage()),
-    );
+    ); 
   }
 
   @override
