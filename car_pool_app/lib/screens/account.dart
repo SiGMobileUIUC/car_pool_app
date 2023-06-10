@@ -1,6 +1,8 @@
+import 'package:car_pool_app/screens/frontpage.dart';
 import 'package:car_pool_app/screens/homepage.dart';
 import 'package:car_pool_app/screens/ride.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AccountScreen extends StatefulWidget {
   @override
@@ -10,17 +12,25 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   int currentIndex = 2; // Added currentIndex variable
 
+  void signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => FrontPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // Disable back button on the top left
         title: Text('Account'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
-            onPressed: () {
-              // Handle sign out functionality
-            },
+            onPressed: () =>
+                signOut(context), // Use the signOut method from HomePage
           ),
         ],
       ),
@@ -118,12 +128,12 @@ class _AccountScreenState extends State<AccountScreen> {
           });
 
           if (index == 0) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => HomePage()),
             );
           } else if (index == 1) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => RidePage()),
             );
@@ -151,12 +161,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
       onTap: onTap,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Ride'),
-        BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.directions_car), label: 'Ride'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle), label: 'Account'),
       ],
-      selectedItemColor: Colors.green,
-      unselectedItemColor: Colors.grey,
+      selectedItemColor: Colors.blue, // Change selected item color to blue
+      //unselectedItemColor: Colors.grey,
     );
   }
 }
-
