@@ -13,15 +13,6 @@ class _RidePageState extends State<RidePage> {
   int currentIndex = 1; // Added currentIndex variable
 
   List<String> postings = [];
-
-  void signOut(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => FrontPage()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,15 +30,7 @@ class _RidePageState extends State<RidePage> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.logout,
-              color: Colors.black,
-            ),
-            onPressed: () => signOut(context),
-          ),
-        ],
+        actions: [],
       ),
       body: Column(
         children: [

@@ -86,8 +86,10 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Ride'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.directions_car), label: 'Ride'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle), label: 'Account'),
         ],
         onTap: (int index) {
           if (index == 1) {
@@ -106,4 +108,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
