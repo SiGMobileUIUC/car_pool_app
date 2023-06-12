@@ -11,13 +11,12 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   int currentIndex = 2; // Added currentIndex variable
-
   void signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => FrontPage()),
-    ); 
+    );
   }
 
   @override
