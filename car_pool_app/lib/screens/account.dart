@@ -41,14 +41,10 @@ class _AccountScreenState extends State<AccountScreen> {
               padding: EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                    // You can display the user's profile image here
-                    backgroundImage: AssetImage('assets/profile_image.png'),
-                  ),
+                  Icon(Icons.account_circle, size: 100),
                   SizedBox(height: 16),
                   Text(
-                    'John Doe',
+                    'First Last',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -56,7 +52,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'johndoe@example.com',
+                    'netid@illinois.edu',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -68,7 +64,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Name'),
-              subtitle: Text('John Doe'),
+              subtitle: Text('First Last'),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // Handle edit name functionality
@@ -77,7 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ListTile(
               leading: Icon(Icons.email),
               title: Text('Email'),
-              subtitle: Text('johndoe@example.com'),
+              subtitle: Text('netid@illinois.edu'),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // Handle edit email functionality
@@ -109,7 +105,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             ListTile(
               leading: Icon(Icons.directions_car),
-              title: Text('Preferred Car Type'),
+              title: Text('Car Type'),
               subtitle: Text('Sedan'),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
