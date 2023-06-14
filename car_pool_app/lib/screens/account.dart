@@ -1,8 +1,10 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:car_pool_app/screens/frontpage.dart';
 import 'package:car_pool_app/screens/homepage.dart';
 import 'package:car_pool_app/screens/ride.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class AccountScreen extends StatefulWidget {
   @override
@@ -11,12 +13,142 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   int currentIndex = 2; // Added currentIndex variable
+  String? displayName = 'First Last';
+  String? email = 'netid@illinois.edu';
+  String? password = '********';
+  File? _image;
+
   void signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => FrontPage()),
     );
+  }
+
+  Future<void> _pickImageFromGallery() async {
+    final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
+  }
+
+  void editName() async {
+    // Show dialog to edit name
+    String? newName = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController nameController = TextEditingController(text: displayName);
+
+        return AlertDialog(
+          title: Text('Edit Name'),
+          content: TextField(
+            controller: nameController,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('SAVE'),
+              onPressed: () {
+                Navigator.of(context).pop(nameController.text);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update name if the user saved the changes
+    if (newName != null) {
+      setState(() {
+        displayName = newName;
+      });
+    }
+  }
+
+  void editEmail() async {
+    // Show dialog to edit email
+    String? newEmail = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController emailController = TextEditingController(text: email);
+
+        return AlertDialog(
+          title: Text('Edit Email'),
+          content: TextField(
+            controller: emailController,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('SAVE'),
+              onPressed: () {
+                Navigator.of(context).pop(emailController.text);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update email if the user saved the changes
+    if (newEmail != null) {
+      setState(() {
+        email = newEmail;
+      });
+    }
+  }
+
+  void editPassword() async {
+    // Show dialog to edit password
+    String? newPassword = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController passwordController = TextEditingController();
+
+        return AlertDialog(
+          title: Text('Edit Password'),
+          content: TextField(
+            controller: passwordController,
+            obscureText: true,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('SAVE'),
+              onPressed: () {
+                Navigator.of(context).pop(passwordController.text);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update password if the user saved the changes
+    if (newPassword != null) {
+      setState(() {
+        password = newPassword;
+      });
+    }
   }
 
   @override
@@ -41,10 +173,17 @@ class _AccountScreenState extends State<AccountScreen> {
               padding: EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  Icon(Icons.account_circle, size: 100),
+                  GestureDetector(
+                    onTap: _pickImageFromGallery,
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage: _image != null ? FileImage(_image!) : null,
+                      child: _image == null ? Icon(Icons.account_circle, size: 100) : null,
+                    ),
+                  ),
                   SizedBox(height: 16),
                   Text(
-                    'First Last',
+                    displayName ?? '',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -52,7 +191,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'netid@illinois.edu',
+                    email ?? '',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -64,19 +203,19 @@ class _AccountScreenState extends State<AccountScreen> {
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Name'),
-              subtitle: Text('First Last'),
+              subtitle: Text(displayName ?? ''),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
-                // Handle edit name functionality
+                editName();
               },
             ),
             ListTile(
               leading: Icon(Icons.email),
               title: Text('Email'),
-              subtitle: Text('netid@illinois.edu'),
+              subtitle: Text(email ?? ''),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
-                // Handle edit email functionality
+                editEmail();
               },
             ),
             ListTile(
@@ -85,7 +224,7 @@ class _AccountScreenState extends State<AccountScreen> {
               subtitle: Text('********'),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
-                // Handle edit password functionality
+                editPassword();
               },
             ),
             SizedBox(height: 16),
@@ -157,9 +296,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car), label: 'Ride'),
+          icon: Icon(Icons.directions_car),
+          label: 'Ride',
+        ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle), label: 'Account'),
+          icon: Icon(Icons.account_circle),
+          label: 'Account',
+        ),
       ],
       selectedItemColor: Colors.blue, // Change selected item color to blue
       //unselectedItemColor: Colors.grey,
