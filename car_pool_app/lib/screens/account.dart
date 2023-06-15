@@ -16,6 +16,8 @@ class _AccountScreenState extends State<AccountScreen> {
   String? displayName = 'First Last';
   String? email = 'netid@illinois.edu';
   String? password = '********';
+  String? bio = '';
+  String? role = '';
   File? _image;
 
   void signOut(BuildContext context) async {
@@ -27,7 +29,8 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Future<void> _pickImageFromGallery() async {
-    final pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
+    final pickedImage =
+        await ImagePicker().getImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       setState(() {
@@ -41,7 +44,8 @@ class _AccountScreenState extends State<AccountScreen> {
     String? newName = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController nameController = TextEditingController(text: displayName);
+        TextEditingController nameController =
+            TextEditingController(text: displayName);
 
         return AlertDialog(
           title: Text('Edit Name'),
@@ -79,7 +83,8 @@ class _AccountScreenState extends State<AccountScreen> {
     String? newEmail = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController emailController = TextEditingController(text: email);
+        TextEditingController emailController =
+            TextEditingController(text: email);
 
         return AlertDialog(
           title: Text('Edit Email'),
@@ -151,6 +156,114 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
+  void editBio() async {
+    // Show dialog to edit bio
+    String? newBio = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController bioController = TextEditingController(text: bio);
+
+        return AlertDialog(
+          title: Text('Edit Bio'),
+          content: TextField(
+            controller: bioController,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('SAVE'),
+              onPressed: () {
+                Navigator.of(context).pop(bioController.text);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update bio if the user saved the changes
+    if (newBio != null) {
+      setState(() {
+        bio = newBio;
+      });
+    }
+  }
+
+  void editRole() async {
+    // Show dialog to select role
+    String? newRole = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        String? selectedRole;
+
+        return AlertDialog(
+          title: Text('Select Role'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text('Driver'),
+                leading: Radio(
+                  value: 'Driver',
+                  groupValue: selectedRole,
+                  onChanged: (value) {
+                    selectedRole = value;
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('Rider'),
+                leading: Radio(
+                  value: 'Rider',
+                  groupValue: selectedRole,
+                  onChanged: (value) {
+                    selectedRole = value;
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('Both'),
+                leading: Radio(
+                  value: 'Both',
+                  groupValue: selectedRole,
+                  onChanged: (value) {
+                    selectedRole = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('SAVE'),
+              onPressed: () {
+                Navigator.of(context).pop(selectedRole);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update role if the user saved the changes
+    if (newRole != null) {
+      setState(() {
+        role = newRole;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,8 +290,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     onTap: _pickImageFromGallery,
                     child: CircleAvatar(
                       radius: 50,
-                      backgroundImage: _image != null ? FileImage(_image!) : null,
-                      child: _image == null ? Icon(Icons.account_circle, size: 100) : null,
+                      backgroundImage:
+                          _image != null ? FileImage(_image!) : null,
+                      backgroundColor: Colors.white,
+                      child: _image == null
+                          ? Icon(Icons.account_circle,
+                              size: 100, color: Colors.black)
+                          : null,
                     ),
                   ),
                   SizedBox(height: 16),
@@ -227,28 +345,22 @@ class _AccountScreenState extends State<AccountScreen> {
                 editPassword();
               },
             ),
-            SizedBox(height: 16),
-            Divider(
-              color: Colors.grey[400],
-              thickness: 1,
-              height: 0,
-            ),
             ListTile(
-              leading: Icon(Icons.location_on),
-              title: Text('Home Address'),
-              subtitle: Text('123 Main St, City, State'),
+              leading: Icon(Icons.info),
+              title: Text('Bio'),
+              subtitle: Text(bio ?? ''),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
-                // Handle edit home address functionality
+                editBio();
               },
             ),
             ListTile(
-              leading: Icon(Icons.directions_car),
-              title: Text('Car Type'),
-              subtitle: Text('Sedan'),
+              leading: Icon(Icons.group),
+              title: Text('Role'),
+              subtitle: Text(role ?? ''),
               trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
-                // Handle edit preferred car type functionality
+                editRole();
               },
             ),
           ],
@@ -304,8 +416,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           label: 'Account',
         ),
       ],
-      selectedItemColor: Colors.blue, // Change selected item color to blue
-      //unselectedItemColor: Colors.grey,
+      selectedItemColor: Colors.black, // Change selected item color to blue
     );
   }
 }
