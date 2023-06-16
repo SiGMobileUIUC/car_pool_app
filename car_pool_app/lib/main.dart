@@ -1,12 +1,10 @@
 import 'package:car_pool_app/screens/homepage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../screens/frontpage.dart';
+//import '../screens/frontpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
-
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 Future<void> main() async {
@@ -46,7 +44,7 @@ class CarpoolApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'CARPOOL APP',
       home: HomePage(),
       debugShowCheckedModeBanner: false,

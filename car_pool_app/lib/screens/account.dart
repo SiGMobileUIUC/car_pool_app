@@ -7,8 +7,9 @@ import 'package:car_pool_app/screens/homepage.dart';
 import 'package:car_pool_app/screens/ride.dart';
 
 class AccountScreen extends StatefulWidget {
+  const AccountScreen({super.key});
   @override
-  _AccountScreenState createState() => _AccountScreenState();
+  State<AccountScreen> createState() => _AccountScreenState();
 }
 
 class _AccountScreenState extends State<AccountScreen> {
@@ -24,15 +25,18 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => FrontPage()),
+      MaterialPageRoute(
+        builder: (context) => const FrontPage(),
+      ),
     );
   }
 
   Future<void> _pickImageFromGallery() async {
     final pickedImage =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       setState(() {
@@ -50,19 +54,19 @@ class _AccountScreenState extends State<AccountScreen> {
             TextEditingController(text: displayName);
 
         return AlertDialog(
-          title: Text('Edit Name'),
+          title: const Text('Edit Name'),
           content: TextField(
             controller: nameController,
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('SAVE'),
+              child: const Text('SAVE'),
               onPressed: () {
                 Navigator.of(context).pop(nameController.text);
               },
@@ -89,19 +93,20 @@ class _AccountScreenState extends State<AccountScreen> {
             TextEditingController(text: email);
 
         return AlertDialog(
-          title: Text('Edit Email'),
+          title: const Text('Edit Email'),
           content: TextField(
             controller: emailController,
+            keyboardType: TextInputType.emailAddress,
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('SAVE'),
+              child: const Text('SAVE'),
               onPressed: () {
                 Navigator.of(context).pop(emailController.text);
               },
@@ -127,20 +132,20 @@ class _AccountScreenState extends State<AccountScreen> {
         TextEditingController passwordController = TextEditingController();
 
         return AlertDialog(
-          title: Text('Edit Password'),
+          title: const Text('Edit Password'),
           content: TextField(
             controller: passwordController,
             obscureText: true,
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('SAVE'),
+              child: const Text('SAVE'),
               onPressed: () {
                 Navigator.of(context).pop(passwordController.text);
               },
@@ -166,19 +171,19 @@ class _AccountScreenState extends State<AccountScreen> {
         TextEditingController bioController = TextEditingController(text: bio);
 
         return AlertDialog(
-          title: Text('Edit Bio'),
+          title: const Text('Edit Bio'),
           content: TextField(
             controller: bioController,
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('SAVE'),
+              child: const Text('SAVE'),
               onPressed: () {
                 Navigator.of(context).pop(bioController.text);
               },
@@ -204,12 +209,12 @@ class _AccountScreenState extends State<AccountScreen> {
         String? selectedRole;
 
         return AlertDialog(
-          title: Text('Select Role'),
+          title: const Text('Select Role'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text('Driver'),
+                title: const Text('Driver'),
                 leading: Radio(
                   value: 'Driver',
                   groupValue: selectedRole,
@@ -219,7 +224,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
               ListTile(
-                title: Text('Rider'),
+                title: const Text('Rider'),
                 leading: Radio(
                   value: 'Rider',
                   groupValue: selectedRole,
@@ -229,7 +234,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
               ListTile(
-                title: Text('Both'),
+                title: const Text('Both'),
                 leading: Radio(
                   value: 'Both',
                   groupValue: selectedRole,
@@ -242,13 +247,13 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('SAVE'),
+              child: const Text('SAVE'),
               onPressed: () {
                 Navigator.of(context).pop(selectedRole);
               },
@@ -275,19 +280,20 @@ class _AccountScreenState extends State<AccountScreen> {
             TextEditingController(text: phoneNumber);
 
         return AlertDialog(
-          title: Text('Edit Phone Number'),
+          title: const Text('Edit Phone Number'),
           content: TextField(
+            keyboardType: TextInputType.number,
             controller: phoneNumberController,
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('SAVE'),
+              child: const Text('SAVE'),
               onPressed: () {
                 Navigator.of(context).pop(phoneNumberController.text);
               },
@@ -314,19 +320,19 @@ class _AccountScreenState extends State<AccountScreen> {
             TextEditingController(text: socialMedia);
 
         return AlertDialog(
-          title: Text('Edit Social Media'),
+          title: const Text('Edit Social Media'),
           content: TextField(
             controller: socialMediaController,
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('SAVE'),
+              child: const Text('SAVE'),
               onPressed: () {
                 Navigator.of(context).pop(socialMediaController.text);
               },
@@ -355,7 +361,7 @@ class _AccountScreenState extends State<AccountScreen> {
         //title: Text('Account'),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             color: Colors.black,
             onPressed: () =>
                 signOut(context), // Use the signOut method from HomePage
@@ -367,7 +373,7 @@ class _AccountScreenState extends State<AccountScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   GestureDetector(
@@ -378,23 +384,23 @@ class _AccountScreenState extends State<AccountScreen> {
                           _image != null ? FileImage(_image!) : null,
                       backgroundColor: Colors.white,
                       child: _image == null
-                          ? Icon(Icons.account_circle,
+                          ? const Icon(Icons.account_circle,
                               size: 100, color: Colors.black)
                           : null,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     displayName ?? '',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     email ?? '',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
                     ),
@@ -403,64 +409,64 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Name'),
+              leading: const Icon(Icons.person),
+              title: const Text('Name'),
               subtitle: Text(displayName ?? ''),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editName();
               },
             ),
             ListTile(
-              leading: Icon(Icons.email),
-              title: Text('Email'),
+              leading: const Icon(Icons.email),
+              title: const Text('Email'),
               subtitle: Text(email ?? ''),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editEmail();
               },
             ),
             ListTile(
-              leading: Icon(Icons.lock),
-              title: Text('Password'),
-              subtitle: Text('********'),
-              trailing: Icon(Icons.arrow_forward_ios),
+              leading: const Icon(Icons.lock),
+              title: const Text('Password'),
+              subtitle: const Text('********'),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editPassword();
               },
             ),
             ListTile(
-              leading: Icon(Icons.info),
-              title: Text('Bio'),
+              leading: const Icon(Icons.info),
+              title: const Text('Bio'),
               subtitle: Text(bio ?? ''),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editBio();
               },
             ),
             ListTile(
-              leading: Icon(Icons.phone),
-              title: Text('Phone Number'),
+              leading: const Icon(Icons.phone),
+              title: const Text('Phone Number'),
               subtitle: Text(phoneNumber ?? ''),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editPhoneNumber();
               },
             ),
             ListTile(
-              leading: Icon(Icons.group),
-              title: Text('Instagram @'),
+              leading: const Icon(Icons.group),
+              title: const Text('Instagram @'),
               subtitle: Text(socialMedia ?? ''),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editSocialMedia();
               },
             ),
             ListTile(
-              leading: Icon(Icons.group),
-              title: Text('Role'),
+              leading: const Icon(Icons.group),
+              title: const Text('Role'),
               subtitle: Text(role ?? ''),
-              trailing: Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editRole();
               },
@@ -481,12 +487,12 @@ class _AccountScreenState extends State<AccountScreen> {
             } else if (currentIndex == 1) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RidePage()),
+                MaterialPageRoute(builder: (context) => const RidePage()),
               );
             }
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',

@@ -1,12 +1,13 @@
 import 'package:car_pool_app/screens/account.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:car_pool_app/screens/frontpage.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:car_pool_app/screens/frontpage.dart';
 import 'homepage.dart';
 
 class RidePage extends StatefulWidget {
+  const RidePage({Key? key}) : super(key: key);
   @override
-  _RidePageState createState() => _RidePageState();
+  State<RidePage> createState() => _RidePageState();
 }
 
 class _RidePageState extends State<RidePage> {
@@ -21,7 +22,7 @@ class _RidePageState extends State<RidePage> {
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.grey[200],
-        title: Text(
+        title: const Text(
           'Ride',
           style: TextStyle(
             fontSize: 50,
@@ -30,7 +31,7 @@ class _RidePageState extends State<RidePage> {
           ),
         ),
         centerTitle: true,
-        actions: [],
+        actions: const [],
       ),
       body: Column(
         children: [
@@ -45,26 +46,26 @@ class _RidePageState extends State<RidePage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Make a New Post',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('New Post'),
+                          title: const Text('New Post'),
                           content: TextField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Enter your post',
                             ),
                             onChanged: (value) {
@@ -77,7 +78,7 @@ class _RidePageState extends State<RidePage> {
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: Text('Cancel'),
+                              child: const Text('Cancel'),
                             ),
                             TextButton(
                               onPressed: () {
@@ -87,14 +88,14 @@ class _RidePageState extends State<RidePage> {
                                 });
                                 Navigator.pop(context);
                               },
-                              child: Text('Post'),
+                              child: const Text('Post'),
                             ),
                           ],
                         );
                       },
                     );
                   },
-                  child: Text('Create New Post'),
+                  child: const Text('Create New Post'),
                 ),
               ],
             ),
@@ -116,7 +117,7 @@ class _RidePageState extends State<RidePage> {
           } else if (index == 2) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AccountScreen()),
+              MaterialPageRoute(builder: (context) => const AccountScreen()),
             );
           }
         },
@@ -130,7 +131,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-  CustomBottomNavigationBar({
+  const CustomBottomNavigationBar({
+    super.key,
     required this.currentIndex,
     required this.onTap,
   });

@@ -19,14 +19,14 @@ class FrontPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "Welcome To UNIRide 🚘!",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 30,
                   ),
                   Text(
@@ -59,7 +59,7 @@ class FrontPage extends StatelessWidget {
                         ),
                       );
                     },
-                    color: Color.fromARGB(255, 0, 32, 91),
+                    color: const Color.fromARGB(255, 0, 32, 91),
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.circular(40),
@@ -88,7 +88,7 @@ class FrontPage extends StatelessWidget {
                         ),
                       );
                     },
-                    color: Color.fromARGB(255, 232, 74, 39),
+                    color: const Color.fromARGB(255, 232, 74, 39),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40)),
                     child: const Text(

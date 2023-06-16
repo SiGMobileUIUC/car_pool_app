@@ -1,11 +1,11 @@
 import 'package:car_pool_app/screens/frontpage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../screens/homepage.dart';
+//import '../screens/homepage.dart';
 import '../screens/login.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key});
+  const SignupPage({super.key});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -72,7 +72,7 @@ class _SignupPageState extends State<SignupPage> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => FrontPage()),
+              MaterialPageRoute(builder: (context) => const FrontPage()),
             );
           },
           icon: const Icon(
@@ -92,9 +92,9 @@ class _SignupPageState extends State<SignupPage> {
               children: [
                 Column(
                   children: [
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Text(
                           "Sign Up",
                           style: TextStyle(
@@ -191,9 +191,9 @@ class _SignupPageState extends State<SignupPage> {
                               ),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             "Login",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                               color: Color.fromARGB(255, 0, 32, 91),
