@@ -18,6 +18,8 @@ class _AccountScreenState extends State<AccountScreen> {
   String? password = '********';
   String? bio = '';
   String? role = '';
+  String? phoneNumber = '';
+  String? socialMedia = '';
   File? _image;
 
   void signOut(BuildContext context) async {
@@ -264,15 +266,97 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
+  void editPhoneNumber() async {
+    // Show dialog to edit phone number
+    String? newPhoneNumber = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController phoneNumberController =
+            TextEditingController(text: phoneNumber);
+
+        return AlertDialog(
+          title: Text('Edit Phone Number'),
+          content: TextField(
+            controller: phoneNumberController,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('SAVE'),
+              onPressed: () {
+                Navigator.of(context).pop(phoneNumberController.text);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update phone number if the user saved the changes
+    if (newPhoneNumber != null) {
+      setState(() {
+        phoneNumber = newPhoneNumber;
+      });
+    }
+  }
+
+  void editSocialMedia() async {
+    // Show dialog to edit social media
+    String? newSocialMedia = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController socialMediaController =
+            TextEditingController(text: socialMedia);
+
+        return AlertDialog(
+          title: Text('Edit Social Media'),
+          content: TextField(
+            controller: socialMediaController,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('SAVE'),
+              onPressed: () {
+                Navigator.of(context).pop(socialMediaController.text);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update social media if the user saved the changes
+    if (newSocialMedia != null) {
+      setState(() {
+        socialMedia = newSocialMedia;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         automaticallyImplyLeading: false, // Disable back button on the top left
-        title: Text('Account'),
+        elevation: 0,
+        backgroundColor: Colors.grey[200],
+        //title: Text('Account'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
+            color: Colors.black,
             onPressed: () =>
                 signOut(context), // Use the signOut method from HomePage
           ),
@@ -355,6 +439,24 @@ class _AccountScreenState extends State<AccountScreen> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.phone),
+              title: Text('Phone Number'),
+              subtitle: Text(phoneNumber ?? ''),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                editPhoneNumber();
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.group),
+              title: Text('Instagram @'),
+              subtitle: Text(socialMedia ?? ''),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                editSocialMedia();
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.group),
               title: Text('Role'),
               subtitle: Text(role ?? ''),
@@ -366,57 +468,40 @@ class _AccountScreenState extends State<AccountScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (int index) {
+        onTap: (index) {
           setState(() {
             currentIndex = index;
+            if (currentIndex == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            } else if (currentIndex == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RidePage()),
+              );
+            }
           });
-
-          if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
-          } else if (index == 1) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => RidePage()),
-            );
-          }
         },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.drive_eta),
+            label: 'Rides',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Account',
+          ),
+        ],
+        selectedItemColor: Colors.black,
       ),
-    );
-  }
-}
-
-// CustomBottomNavigationBar implementation
-class CustomBottomNavigationBar extends StatelessWidget {
-  final int currentIndex;
-  final ValueChanged<int> onTap;
-
-  CustomBottomNavigationBar({
-    required this.currentIndex,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: onTap,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.directions_car),
-          label: 'Ride',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: 'Account',
-        ),
-      ],
-      selectedItemColor: Colors.black, // Change selected item color to blue
     );
   }
 }
