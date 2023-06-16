@@ -1,3 +1,4 @@
+import 'package:car_pool_app/screens/homepage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../screens/frontpage.dart';
@@ -46,7 +47,7 @@ class CarpoolApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'CARPOOL APP',
-      home: FrontPage(),
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
