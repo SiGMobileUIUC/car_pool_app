@@ -20,7 +20,7 @@ class _AccountScreenState extends State<AccountScreen> {
   String? bio = 'Share a few words about yourself';
   String? role = 'Driver, Rider, or Both';
   String? phoneNumber = '012 345 6789';
-  String? socialMedia = '@';
+  String? socialMedia = '';
   File? _image;
 
   void signOut(BuildContext context) async {
@@ -375,38 +375,41 @@ class _AccountScreenState extends State<AccountScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: _pickImageFromGallery,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage:
-                          _image != null ? FileImage(_image!) : null,
-                      backgroundColor: Colors.white,
-                      child: _image == null
-                          ? const Icon(Icons.account_circle,
-                              size: 100, color: Colors.black)
-                          : null,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    displayName ?? '',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    email ?? '',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
+  children: [
+    GestureDetector(
+      onTap: _pickImageFromGallery,
+      child: CircleAvatar(
+        radius: 50,
+        backgroundImage: _image != null ? FileImage(_image!) : null,
+        backgroundColor: Colors.grey[200],
+        child: _image == null
+            ? Icon(Icons.account_circle, size: 100, color: Colors.black)
+            : null,
+      ),
+    ),
+    SizedBox(height: 16),
+    Center(
+      child: Text(
+        displayName ?? '',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    SizedBox(height: 8),
+    Center(
+      child: Text(
+        email ?? '',
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.grey,
+        ),
+      ),
+    ),
+  ],
+),
+
             ),
             ListTile(
               leading: const Icon(Icons.person),
