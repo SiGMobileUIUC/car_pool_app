@@ -379,13 +379,13 @@ class _AccountScreenState extends State<AccountScreen> {
                   GestureDetector(
                     onTap: _pickImageFromGallery,
                     child: CircleAvatar(
-                      radius: 50,
+                      radius: 75,
                       backgroundImage:
                           _image != null ? FileImage(_image!) : null,
                       backgroundColor: Colors.grey[200],
                       child: _image == null
                           ? Icon(Icons.account_circle,
-                              size: 100, color: Colors.black)
+                              size: 125, color: Colors.black)
                           : null,
                     ),
                   ),
@@ -459,7 +459,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.group),
-              title: const Text('Instagram @'),
+              title: const Text('Instagram'),
               subtitle: Text(socialMedia ?? ''),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
@@ -467,7 +467,7 @@ class _AccountScreenState extends State<AccountScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.group),
+              leading: const Icon(Icons.drive_eta_rounded),
               title: const Text('Role'),
               subtitle: Text(role ?? ''),
               trailing: const Icon(Icons.arrow_forward_ios),
