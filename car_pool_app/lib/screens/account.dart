@@ -375,41 +375,42 @@ class _AccountScreenState extends State<AccountScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-  children: [
-    GestureDetector(
-      onTap: _pickImageFromGallery,
-      child: CircleAvatar(
-        radius: 50,
-        backgroundImage: _image != null ? FileImage(_image!) : null,
-        backgroundColor: Colors.grey[200],
-        child: _image == null
-            ? Icon(Icons.account_circle, size: 100, color: Colors.black)
-            : null,
-      ),
-    ),
-    SizedBox(height: 16),
-    Center(
-      child: Text(
-        displayName ?? '',
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    SizedBox(height: 8),
-    Center(
-      child: Text(
-        email ?? '',
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.grey,
-        ),
-      ),
-    ),
-  ],
-),
-
+                children: [
+                  GestureDetector(
+                    onTap: _pickImageFromGallery,
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage:
+                          _image != null ? FileImage(_image!) : null,
+                      backgroundColor: Colors.grey[200],
+                      child: _image == null
+                          ? Icon(Icons.account_circle,
+                              size: 100, color: Colors.black)
+                          : null,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Center(
+                    child: Text(
+                      displayName ?? '',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Center(
+                    child: Text(
+                      email ?? '',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             ListTile(
               leading: const Icon(Icons.person),
