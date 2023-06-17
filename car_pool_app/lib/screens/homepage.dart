@@ -6,23 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:car_pool_app/screens/account.dart';
 import 'package:car_pool_app/screens/ride.dart';
 
-class CarPoolPost {
-  final String driverName;
-  final String carType;
-  final String departure;
-  final String destination;
-  final String time;
-  final int availableSeats;
-
-  CarPoolPost({
-    required this.driverName,
-    required this.carType,
-    required this.departure,
-    required this.destination,
-    required this.time,
-    required this.availableSeats,
-  });
-}
+import 'package:car_pool_app/CarpoolPostClass.dart';
 
 class HomePage extends StatelessWidget {
   final List<CarPoolPost> carpoolPosts = [
