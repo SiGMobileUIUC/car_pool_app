@@ -1,18 +1,33 @@
 import 'package:car_pool_app/screens/account.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:car_pool_app/screens/frontpage.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:car_pool_app/screens/frontpage.dart';
 import 'homepage.dart';
+import 'package:car_pool_app/CarpoolPostClass.dart';
 
 class RidePage extends StatefulWidget {
+  const RidePage({Key? key}) : super(key: key);
   @override
-  _RidePageState createState() => _RidePageState();
+  State<RidePage> createState() => _RidePageState();
 }
 
 class _RidePageState extends State<RidePage> {
   int currentIndex = 1; // Added currentIndex variable
-
-  List<String> postings = [];
+  CarPoolPost postDescription = CarPoolPost(
+    driverName: 'Loading...',
+    carType: 'Loading...',
+    departure: 'Loading...',
+    destination: 'Loading...',
+    time: 'Loading...',
+    availableSeats: 0,
+  );
+  String tempName = "";
+  String tempCarType = "";
+  String tempDeparture = "";
+  String tempDestination = "";
+  String tempTime = "";
+  int tempAvailableSeats = 0;
+  List<CarPoolPost> postings = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +36,7 @@ class _RidePageState extends State<RidePage> {
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.grey[200],
-        title: Text(
+        title: const Text(
           'Ride',
           style: TextStyle(
             fontSize: 50,
@@ -30,7 +45,7 @@ class _RidePageState extends State<RidePage> {
           ),
         ),
         centerTitle: true,
-        actions: [],
+        actions: const [],
       ),
       body: Column(
         children: [
@@ -38,63 +53,135 @@ class _RidePageState extends State<RidePage> {
             child: ListView.builder(
               itemCount: postings.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(postings[index]),
+                return Card(
+                  child: ListTile(
+                    title: Text(
+                        '${postings[index].departure} to ${postings[index].destination}'),
+                    subtitle: Text(
+                      'Time: ${postings[index].time}\nAvailable Seats: ${postings[index].availableSeats}',
+                    ),
+                    trailing: Text(
+                        'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}'),
+                  ),
                 );
               },
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Make a New Post',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('New Post'),
-                          content: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Enter your post',
-                            ),
-                            onChanged: (value) {
-                              // Update the post value
-                              // You can store the value in a database or a state management solution
-                            },
+                          title: const Text('New Post'),
+                          content: Column(
+                            children: [
+                              TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Name of the driver',
+                                ),
+                                onChanged: (value) {
+                                  tempName = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Car Type',
+                                ),
+                                onChanged: (value) {
+                                  tempCarType = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Departure',
+                                ),
+                                onChanged: (value) {
+                                  tempDeparture = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Destination',
+                                ),
+                                onChanged: (value) {
+                                  tempDestination = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                keyboardType: TextInputType.datetime,
+                                decoration: const InputDecoration(
+                                  hintText: 'Time',
+                                ),
+                                onChanged: (value) {
+                                  tempTime = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  hintText: 'Available Seats',
+                                ),
+                                onChanged: (value) {
+                                  tempAvailableSeats = int.parse(value);
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                            ],
                           ),
                           actions: [
                             TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: Text('Cancel'),
+                              child: const Text('Cancel'),
                             ),
                             TextButton(
                               onPressed: () {
                                 // Add the new post to the list
                                 setState(() {
-                                  postings.add('New Post');
+                                  postDescription = CarPoolPost(
+                                      driverName: tempName,
+                                      carType: tempCarType,
+                                      departure: tempDeparture,
+                                      destination: tempDestination,
+                                      time: tempTime,
+                                      availableSeats: tempAvailableSeats);
+                                  postings.add(postDescription);
                                 });
                                 Navigator.pop(context);
                               },
-                              child: Text('Post'),
+                              child: const Text('Post'),
                             ),
                           ],
                         );
                       },
                     );
                   },
-                  child: Text('Create New Post'),
+                  child: const Text('Create New Post'),
                 ),
               ],
             ),
@@ -116,7 +203,7 @@ class _RidePageState extends State<RidePage> {
           } else if (index == 2) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AccountScreen()),
+              MaterialPageRoute(builder: (context) => const AccountScreen()),
             );
           }
         },
@@ -130,7 +217,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-  CustomBottomNavigationBar({
+  const CustomBottomNavigationBar({
+    super.key,
     required this.currentIndex,
     required this.onTap,
   });

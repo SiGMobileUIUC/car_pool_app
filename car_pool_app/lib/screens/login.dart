@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../screens/homepage.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => FrontPage()),
+              MaterialPageRoute(builder: (context) => const FrontPage()),
             );
           },
           icon: const Icon(
@@ -56,9 +56,9 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Column(
                   children: [
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         Text(
                           "Login",
                           style: TextStyle(
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: loginUser,
-                          color: Color.fromARGB(255, 0, 32, 91),
+                          color: const Color.fromARGB(255, 0, 32, 91),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40),
                           ),
@@ -147,9 +147,9 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             "Sign Up",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                               color: Color.fromARGB(255, 232, 74, 39),
