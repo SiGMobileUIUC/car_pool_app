@@ -9,6 +9,7 @@ import 'package:car_pool_app/screens/ride.dart';
 import 'package:car_pool_app/CarpoolPostClass.dart';
 
 class HomePage extends StatelessWidget {
+  //TODO : Need to create dynamic lists of carpool posts that we store on firebase and maybe pull every min or so or when user refereshes page
   final List<CarPoolPost> carpoolPosts = [
     CarPoolPost(
       driverName: 'John Doe',
@@ -43,6 +44,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[200],
+      // TODO : Add refresh button within appbar to refresh list of carpool posts from firebase and make API call
       appBar: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
@@ -61,6 +63,7 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          //TODO: Add a button to delete posts
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -80,6 +83,7 @@ class HomePage extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       showDialog(
+                        //TODO : format dialog box to have images and be more appealing
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(

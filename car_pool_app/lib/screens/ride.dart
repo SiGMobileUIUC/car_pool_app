@@ -27,6 +27,7 @@ class _RidePageState extends State<RidePage> {
   String tempDestination = "";
   String tempTime = "";
   int tempAvailableSeats = 0;
+  //TODO : Need to create dynamic lists of on the current user's carpool posts that we store on firebase and maybe pull every min or so or when user refereshes page
   List<CarPoolPost> postings = [];
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,7 @@ class _RidePageState extends State<RidePage> {
         actions: const [],
       ),
       body: Column(
+        //TODO: Add a button to delete posts
         children: [
           Expanded(
             child: ListView.builder(
@@ -82,6 +84,8 @@ class _RidePageState extends State<RidePage> {
                 ElevatedButton(
                   onPressed: () {
                     showDialog(
+                      //TODO : format the dialog box to look better
+                      //TODO : Validate that all entries are filled with correct data types before submitting post
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
