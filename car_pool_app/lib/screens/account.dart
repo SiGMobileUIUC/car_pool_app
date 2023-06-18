@@ -17,9 +17,9 @@ class _AccountScreenState extends State<AccountScreen> {
   String? displayName = 'First Last';
   String? email = 'netid@illinois.edu';
   String? password = '********';
-  String? bio = '';
-  String? role = '';
-  String? phoneNumber = '';
+  String? bio = 'Share a few words about yourself';
+  String? role = 'Driver, Rider, or Both';
+  String? phoneNumber = '012 345 6789';
   String? socialMedia = '';
   File? _image;
 
@@ -379,30 +379,34 @@ class _AccountScreenState extends State<AccountScreen> {
                   GestureDetector(
                     onTap: _pickImageFromGallery,
                     child: CircleAvatar(
-                      radius: 50,
+                      radius: 75,
                       backgroundImage:
                           _image != null ? FileImage(_image!) : null,
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.grey[200],
                       child: _image == null
-                          ? const Icon(Icons.account_circle,
-                              size: 100, color: Colors.black)
+                          ? Icon(Icons.account_circle,
+                              size: 125, color: Colors.black)
                           : null,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    displayName ?? '',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(height: 16),
+                  Center(
+                    child: Text(
+                      displayName ?? '',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    email ?? '',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
+                  SizedBox(height: 8),
+                  Center(
+                    child: Text(
+                      email ?? '',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ],
@@ -455,7 +459,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.group),
-              title: const Text('Instagram @'),
+              title: const Text('Instagram'),
               subtitle: Text(socialMedia ?? ''),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
@@ -463,7 +467,7 @@ class _AccountScreenState extends State<AccountScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.group),
+              leading: const Icon(Icons.drive_eta_rounded),
               title: const Text('Role'),
               subtitle: Text(role ?? ''),
               trailing: const Icon(Icons.arrow_forward_ios),
