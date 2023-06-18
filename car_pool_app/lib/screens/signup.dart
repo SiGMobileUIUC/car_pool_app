@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //import '../screens/homepage.dart';
 import '../screens/login.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -21,34 +22,35 @@ class _SignupPageState extends State<SignupPage> {
   @override
   void initState() {
     super.initState();
-    _emailController.addListener(() {
-      final String text = _emailController.text;
-      _emailController.value = _emailController.value.copyWith(
-        text: text,
-        selection:
-            TextSelection(baseOffset: text.length, extentOffset: text.length),
-        composing: TextRange.empty,
-      );
-    });
-    _passwordController.addListener(() {
-      final String text = _passwordController.text;
-      _passwordController.value = _passwordController.value.copyWith(
-        text: text,
-        selection:
-            TextSelection(baseOffset: text.length, extentOffset: text.length),
-        composing: TextRange.empty,
-      );
-    });
-    _confirmPasswordController.addListener(() {
-      final String text = _confirmPasswordController.text;
-      _confirmPasswordController.value =
-          _confirmPasswordController.value.copyWith(
-        text: text,
-        selection:
-            TextSelection(baseOffset: text.length, extentOffset: text.length),
-        composing: TextRange.empty,
-      );
-    });
+    //I Don't know why you have these listeners and I'm pretty sure they're the reason why you can't type in signup page (EXPLAIN WHY)
+    // _emailController.addListener(() {
+    //   final String text = _emailController.text;
+    //   _emailController.value = _emailController.value.copyWith(
+    //     text: text,
+    //     selection:
+    //         TextSelection(baseOffset: text.length, extentOffset: text.length),
+    //     composing: TextRange.empty,
+    //   );
+    // });
+    // _passwordController.addListener(() {
+    //   final String text = _passwordController.text;
+    //   _passwordController.value = _passwordController.value.copyWith(
+    //     text: text,
+    //     selection:
+    //         TextSelection(baseOffset: text.length, extentOffset: text.length),
+    //     composing: TextRange.empty,
+    //   );
+    // });
+    // _confirmPasswordController.addListener(() {
+    //   final String text = _confirmPasswordController.text;
+    //   _confirmPasswordController.value =
+    //       _confirmPasswordController.value.copyWith(
+    //     text: text,
+    //     selection:
+    //         TextSelection(baseOffset: text.length, extentOffset: text.length),
+    //     composing: TextRange.empty,
+    //   );
+    // });
   }
 
   @override
@@ -62,7 +64,8 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      //*Leave this as true so that you can see textField when keyboard pops up
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -134,6 +137,21 @@ class _SignupPageState extends State<SignupPage> {
                               controller: _passwordController,
                               validator: validatePassword,
                             ),
+                            FlutterPwValidator(
+                              controller: _passwordController,
+                              minLength: 6,
+                              uppercaseCharCount: 2,
+                              lowercaseCharCount: 2,
+                              numericCharCount: 3,
+                              specialCharCount: 1,
+                              width: 400,
+                              height: 150,
+                              onSuccess: () {},
+                              onFail: () {},
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
                             makeInput(
                               label: "Confirm Password",
                               password: true,
@@ -147,7 +165,8 @@ class _SignupPageState extends State<SignupPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Container(
-                        padding: const EdgeInsets.only(top: 3, left: 3),
+                        //*Same comment as login but WHY DO YOU HAVE THIS PADDING
+                        //padding: const EdgeInsets.only(top: 3, left: 3),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40),
                           border: const Border(
@@ -257,15 +276,31 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a valid email.';
-    }
-    if (!value.contains('@illinois.edu')) {
-      return 'Please enter a valid email.';
-    }
-    return null;
-  }
+    const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+        r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
+        r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
+        r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
+        r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
+        r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
+        r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
+    final regex = RegExp(pattern);
 
+    return value!.isNotEmpty && !regex.hasMatch(value)
+        ? 'Enter a valid email address'
+        : null;
+  }
+  // *I'd prefer regex format for all emeails but if you want to enfore @illinois.edu you can easily change above function
+  // String? validateEmail(String? value) {
+  //   if (value == null || value.isEmpty) {
+  //     return 'Please enter a valid email.';
+  //   }
+  //   if (!value.contains('@illinois.edu')) {
+  //     return 'Please enter a valid email.';
+  //   }
+  //   return null;
+  // }
+
+  //*You can keep this hintText validator if you want or you can get rid of it since I already used pw_validatorq package
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a password.';

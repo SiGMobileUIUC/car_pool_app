@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../screens/homepage.dart';
 
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -21,6 +22,27 @@ class _LoginPageState extends State<LoginPage> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  String? validateEmail(String? value) {
+    const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+        r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
+        r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
+        r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
+        r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
+        r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
+        r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
+    final regex = RegExp(pattern);
+
+    return value!.isNotEmpty && !regex.hasMatch(value)
+        ? 'Enter a valid email address'
+        : null;
+  }
+    String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a password.';
+    }
+    return null;
   }
 
   @override
@@ -84,17 +106,20 @@ class _LoginPageState extends State<LoginPage> {
                     Form(
                       key: _formKey,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 10),
                         child: Column(
                           children: [
                             makeInput(
                               label: "Email",
                               controller: _emailController,
+                              validator: validateEmail,
                             ),
                             makeInput(
-                              label: "Password",
                               obscureText: true,
+                              label: "Password",
                               controller: _passwordController,
+                              validator: validatePassword,
                             ),
                           ],
                         ),
@@ -103,7 +128,8 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Container(
-                        padding: const EdgeInsets.only(top: 3, left: 3),
+                        //This padding just makes a gap between border and color, why was this added?
+                        //padding: const EdgeInsets.only(top: 3, left: 3),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40),
                           border: const Border(
@@ -172,6 +198,7 @@ class _LoginPageState extends State<LoginPage> {
     required String label,
     bool obscureText = false,
     required TextEditingController controller,
+    required String? Function(String?)? validator,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,18 +214,24 @@ class _LoginPageState extends State<LoginPage> {
         const SizedBox(
           height: 5,
         ),
-        TextFormField(
-          controller: controller,
-          obscureText: obscureText,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.grey,
+        Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: TextFormField(
+            //You can use the line below if you want only the email to have validator
+            //validator: label == "Email" ? validator : null,
+            validator: validator,
+            controller: controller,
+            obscureText: obscureText,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.grey,
+                ),
               ),
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
             ),
           ),
         ),
@@ -244,4 +277,3 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 }
-
