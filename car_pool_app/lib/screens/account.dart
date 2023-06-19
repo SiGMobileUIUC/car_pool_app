@@ -16,10 +16,10 @@ class _AccountScreenState extends State<AccountScreen> {
   int currentIndex = 2; // Added currentIndex variable
   String? displayName = 'First Last';
   String? email = 'netid@illinois.edu';
-  String? password = '********';
-  String? bio = 'Share a few words about yourself';
-  String? role = 'Driver, Rider, or Both';
-  String? phoneNumber = '012 345 6789';
+  String? password = '';
+  String? bio = '';
+  String? role = '';
+  String? phoneNumber = '';
   String? socialMedia = '';
   File? _image;
 
@@ -422,30 +422,30 @@ class _AccountScreenState extends State<AccountScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.email),
-              title: const Text('Email'),
-              subtitle: Text(email ?? ''),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                editEmail();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.lock),
-              title: const Text('Password'),
-              subtitle: const Text('********'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                editPassword();
-              },
-            ),
-            ListTile(
               leading: const Icon(Icons.info),
               title: const Text('Bio'),
               subtitle: Text(bio ?? ''),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editBio();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.drive_eta_rounded),
+              title: const Text('Role'),
+              subtitle: Text(role ?? ''),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                editRole();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.email),
+              title: const Text('Email'),
+              subtitle: Text(email ?? ''),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                editEmail();
               },
             ),
             ListTile(
@@ -467,14 +467,16 @@ class _AccountScreenState extends State<AccountScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.drive_eta_rounded),
-              title: const Text('Role'),
-              subtitle: Text(role ?? ''),
+              leading: const Icon(Icons.lock),
+              title: const Text('Password'),
+              subtitle: const Text('******'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
-                editRole();
+                editPassword();
               },
             ),
+            
+            
           ],
         ),
       ),

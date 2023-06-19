@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 //import 'package:car_pool_app/screens/frontpage.dart';
 import 'homepage.dart';
 import 'package:car_pool_app/CarpoolPostClass.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class RidePage extends StatefulWidget {
   const RidePage({Key? key}) : super(key: key);
@@ -164,7 +166,7 @@ class _RidePageState extends State<RidePage> {
                               child: const Text('Cancel'),
                             ),
                             TextButton(
-                              onPressed: () {
+                              onPressed: ()  {
                                 // Add the new post to the list
                                 setState(() {
                                   postDescription = CarPoolPost(
@@ -174,7 +176,7 @@ class _RidePageState extends State<RidePage> {
                                       destination: tempDestination,
                                       time: tempTime,
                                       availableSeats: tempAvailableSeats);
-                                  postings.add(postDescription);
+                                      postings.add(postDescription);
                                 });
                                 Navigator.pop(context);
                               },
