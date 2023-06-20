@@ -1,10 +1,11 @@
-//import 'package:car_pool_app/screens/homepage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../screens/frontpage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import 'firebase_options.dart';
+import 'screens/frontpage.dart';
+import 'screens/homepage.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 Future<void> main() async {
@@ -46,7 +47,23 @@ class CarpoolApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CARPOOL APP',
-      home: FrontPage(),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.idTokenChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return HomePage();
+            } else {
+              return const FrontPage();
+            }
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else {
+            // This could bring up an error page.
+            return const Placeholder();
+          }
+        },
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
