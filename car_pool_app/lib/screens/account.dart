@@ -16,11 +16,11 @@ class _AccountScreenState extends State<AccountScreen> {
   int currentIndex = 2; // Added currentIndex variable
   String? displayName = 'First Last';
   String? email = 'netid@illinois.edu';
-  String? password = '';
-  String? bio = '';
-  String? role = '';
-  String? phoneNumber = '';
-  String? socialMedia = '';
+  String? password = '********';
+  String? bio = 'School, Major, Year in School';
+  String? role = 'Driver, Rider, or Both';
+  String? phoneNumber = '### ### ####';
+  String? socialMedia = '@socialmedia';
   File? _image;
 
   void signOut(BuildContext context) async {
@@ -469,14 +469,12 @@ class _AccountScreenState extends State<AccountScreen> {
             ListTile(
               leading: const Icon(Icons.lock),
               title: const Text('Password'),
-              subtitle: const Text('******'),
+              subtitle: const Text('********'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 editPassword();
               },
             ),
-            
-            
           ],
         ),
       ),
