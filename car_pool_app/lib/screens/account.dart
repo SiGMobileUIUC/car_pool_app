@@ -47,16 +47,28 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void editName() async {
     // Show dialog to edit name
-    String? newName = await showDialog<String>(
+    String? newName;
+    bool isTyping = false;
+
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         TextEditingController nameController =
-            TextEditingController(text: displayName);
+            TextEditingController(text: isTyping ? displayName : '');
+
+        nameController.addListener(() {
+          setState(() {
+            isTyping = nameController.text.isNotEmpty;
+          });
+        });
 
         return AlertDialog(
           title: const Text('Edit Name'),
           content: TextField(
             controller: nameController,
+            decoration: InputDecoration(
+              hintText: 'Enter name',
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -68,7 +80,8 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                Navigator.of(context).pop(nameController.text);
+                newName = nameController.text;
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -79,7 +92,7 @@ class _AccountScreenState extends State<AccountScreen> {
     // Update name if the user saved the changes
     if (newName != null) {
       setState(() {
-        displayName = newName;
+        displayName = newName!;
       });
     }
   }
