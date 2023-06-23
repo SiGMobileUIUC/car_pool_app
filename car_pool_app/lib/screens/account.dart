@@ -45,66 +45,65 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
- void editName() async {
-  // Show dialog to edit name
-  String? newName;
-  String? previousName = displayName; // Store the previous name
-  bool isTyping = false;
+  void editName() async {
+    // Show dialog to edit name
+    String? newName;
+    String? previousName = displayName; // Store the previous name
+    bool isTyping = false;
 
-  await showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      TextEditingController nameController =
-          TextEditingController(text: isTyping ? displayName : '');
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController nameController =
+            TextEditingController(text: isTyping ? displayName : '');
 
-      nameController.addListener(() {
-        setState(() {
-          isTyping = nameController.text.isNotEmpty;
+        nameController.addListener(() {
+          setState(() {
+            isTyping = nameController.text.isNotEmpty;
+          });
         });
+
+        return AlertDialog(
+          title: const Text('Name'),
+          content: TextField(
+            controller: nameController,
+            decoration: InputDecoration(
+              hintText: 'First Last',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('SAVE'),
+              onPressed: () {
+                newName = nameController.text.isNotEmpty
+                    ? nameController.text
+                    : previousName!; // Use previousName if text is empty and perform null check
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update name if the user saved the changes
+    if (newName != null) {
+      setState(() {
+        displayName = newName!;
       });
-
-      return AlertDialog(
-        title: const Text('Name'),
-        content: TextField(
-          controller: nameController,
-          decoration: InputDecoration(
-            hintText: 'First Last',
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('CANCEL'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            child: const Text('SAVE'),
-            onPressed: () {
-              newName = nameController.text.isNotEmpty
-                  ? nameController.text
-                  : previousName!; // Use previousName if text is empty and perform null check
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-
-  // Update name if the user saved the changes
-  if (newName != null) {
-    setState(() {
-      displayName = newName!;
-    });
+    }
   }
-}
-
-
 
   void editEmail() async {
     // Show dialog to edit name
     String? newEmail;
+    String? previousEmail = email; // Store the previous name
     bool isTyping = false;
 
     await showDialog<void>(
@@ -137,7 +136,9 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                newEmail = nameController.text;
+                newEmail = nameController.text.isNotEmpty
+                    ? nameController.text
+                    : previousEmail!; // Use previousName if text is empty and perform null check
                 Navigator.of(context).pop();
               },
             ),
@@ -157,6 +158,7 @@ class _AccountScreenState extends State<AccountScreen> {
   void editPassword() async {
     // Show dialog to edit name
     String? newPassword;
+    String? previousPassword = password; // Store the previous name
     bool isTyping = false;
 
     await showDialog<void>(
@@ -176,7 +178,7 @@ class _AccountScreenState extends State<AccountScreen> {
           content: TextField(
             controller: nameController,
             decoration: InputDecoration(
-              hintText: '',
+              hintText: '********',
             ),
           ),
           actions: <Widget>[
@@ -189,7 +191,9 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                newPassword = nameController.text;
+                newPassword = nameController.text.isNotEmpty
+                    ? nameController.text
+                    : previousPassword!; // Use previousName if text is empty and perform null check
                 Navigator.of(context).pop();
               },
             ),
@@ -207,16 +211,30 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void editBio() async {
-    // Show dialog to edit bio
-    String? newBio = await showDialog<String>(
+    // Show dialog to edit name
+    String? newBio;
+    String? previousBio = bio; // Store the previous name
+    bool isTyping = false;
+
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController bioController = TextEditingController(text: bio);
+        TextEditingController nameController =
+            TextEditingController(text: isTyping ? bio : '');
+
+        nameController.addListener(() {
+          setState(() {
+            isTyping = nameController.text.isNotEmpty;
+          });
+        });
 
         return AlertDialog(
-          title: const Text('Edit Bio'),
+          title: const Text('Bio'),
           content: TextField(
-            controller: bioController,
+            controller: nameController,
+            decoration: InputDecoration(
+              hintText: 'Share a few words',
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -228,7 +246,10 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                Navigator.of(context).pop(bioController.text);
+                newBio = nameController.text.isNotEmpty
+                    ? nameController.text
+                    : previousBio!; // Use previousName if text is empty and perform null check
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -236,10 +257,10 @@ class _AccountScreenState extends State<AccountScreen> {
       },
     );
 
-    // Update bio if the user saved the changes
+    // Update name if the user saved the changes
     if (newBio != null) {
       setState(() {
-        bio = newBio;
+        bio = newBio!;
       });
     }
   }
@@ -315,18 +336,30 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void editPhoneNumber() async {
-    // Show dialog to edit phone number
-    String? newPhoneNumber = await showDialog<String>(
+    // Show dialog to edit name
+    String? newNumber;
+    String? previousNumber = phoneNumber; // Store the previous name
+    bool isTyping = false;
+
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController phoneNumberController =
-            TextEditingController(text: phoneNumber);
+        TextEditingController nameController =
+            TextEditingController(text: isTyping ? phoneNumber : '');
+
+        nameController.addListener(() {
+          setState(() {
+            isTyping = nameController.text.isNotEmpty;
+          });
+        });
 
         return AlertDialog(
-          title: const Text('Edit Phone Number'),
+          title: const Text('Phone Number'),
           content: TextField(
-            keyboardType: TextInputType.number,
-            controller: phoneNumberController,
+            controller: nameController,
+            decoration: InputDecoration(
+              hintText: '### ### ####',
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -338,7 +371,10 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                Navigator.of(context).pop(phoneNumberController.text);
+                newNumber = nameController.text.isNotEmpty
+                    ? nameController.text
+                    : previousNumber!; // Use previousName if text is empty and perform null check
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -346,26 +382,39 @@ class _AccountScreenState extends State<AccountScreen> {
       },
     );
 
-    // Update phone number if the user saved the changes
-    if (newPhoneNumber != null) {
+    // Update name if the user saved the changes
+    if (newNumber != null) {
       setState(() {
-        phoneNumber = newPhoneNumber;
+        phoneNumber = newNumber!;
       });
     }
   }
 
   void editSocialMedia() async {
-    // Show dialog to edit social media
-    String? newSocialMedia = await showDialog<String>(
+    // Show dialog to edit name
+    String? newSocial;
+    String? previousSocial = socialMedia; // Store the previous name
+    bool isTyping = false;
+
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController socialMediaController =
-            TextEditingController(text: socialMedia);
+        TextEditingController nameController =
+            TextEditingController(text: isTyping ? socialMedia : '');
+
+        nameController.addListener(() {
+          setState(() {
+            isTyping = nameController.text.isNotEmpty;
+          });
+        });
 
         return AlertDialog(
-          title: const Text('Edit Social Media'),
+          title: const Text('Instagram'),
           content: TextField(
-            controller: socialMediaController,
+            controller: nameController,
+            decoration: InputDecoration(
+              hintText: 'socialmedia',
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -377,7 +426,10 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                Navigator.of(context).pop(socialMediaController.text);
+                newSocial = nameController.text.isNotEmpty
+                    ? nameController.text
+                    : previousSocial!; // Use previousName if text is empty and perform null check
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -385,10 +437,10 @@ class _AccountScreenState extends State<AccountScreen> {
       },
     );
 
-    // Update social media if the user saved the changes
-    if (newSocialMedia != null) {
+    // Update name if the user saved the changes
+    if (newSocial != null) {
       setState(() {
-        socialMedia = newSocialMedia;
+        socialMedia = newSocial!;
       });
     }
   }
