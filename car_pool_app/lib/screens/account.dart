@@ -45,16 +45,73 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
-  void editName() async {
+ void editName() async {
+  // Show dialog to edit name
+  String? newName;
+  String? previousName = displayName; // Store the previous name
+  bool isTyping = false;
+
+  await showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      TextEditingController nameController =
+          TextEditingController(text: isTyping ? displayName : '');
+
+      nameController.addListener(() {
+        setState(() {
+          isTyping = nameController.text.isNotEmpty;
+        });
+      });
+
+      return AlertDialog(
+        title: const Text('Name'),
+        content: TextField(
+          controller: nameController,
+          decoration: InputDecoration(
+            hintText: 'First Last',
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('CANCEL'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('SAVE'),
+            onPressed: () {
+              newName = nameController.text.isNotEmpty
+                  ? nameController.text
+                  : previousName!; // Use previousName if text is empty and perform null check
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+
+  // Update name if the user saved the changes
+  if (newName != null) {
+    setState(() {
+      displayName = newName!;
+    });
+  }
+}
+
+
+
+  void editEmail() async {
     // Show dialog to edit name
-    String? newName;
+    String? newEmail;
     bool isTyping = false;
 
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         TextEditingController nameController =
-            TextEditingController(text: isTyping ? displayName : '');
+            TextEditingController(text: isTyping ? email : '');
 
         nameController.addListener(() {
           setState(() {
@@ -63,11 +120,11 @@ class _AccountScreenState extends State<AccountScreen> {
         });
 
         return AlertDialog(
-          title: const Text('Edit Name'),
+          title: const Text('Email'),
           content: TextField(
             controller: nameController,
             decoration: InputDecoration(
-              hintText: 'Enter name',
+              hintText: 'netid@illinois.edu',
             ),
           ),
           actions: <Widget>[
@@ -80,7 +137,7 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                newName = nameController.text;
+                newEmail = nameController.text;
                 Navigator.of(context).pop();
               },
             ),
@@ -90,65 +147,37 @@ class _AccountScreenState extends State<AccountScreen> {
     );
 
     // Update name if the user saved the changes
-    if (newName != null) {
-      setState(() {
-        displayName = newName!;
-      });
-    }
-  }
-
-  void editEmail() async {
-    // Show dialog to edit email
-    String? newEmail = await showDialog<String>(
-      context: context,
-      builder: (BuildContext context) {
-        TextEditingController emailController =
-            TextEditingController(text: email);
-
-        return AlertDialog(
-          title: const Text('Edit Email'),
-          content: TextField(
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('CANCEL'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('SAVE'),
-              onPressed: () {
-                Navigator.of(context).pop(emailController.text);
-              },
-            ),
-          ],
-        );
-      },
-    );
-
-    // Update email if the user saved the changes
     if (newEmail != null) {
       setState(() {
-        email = newEmail;
+        email = newEmail!;
       });
     }
   }
 
   void editPassword() async {
-    // Show dialog to edit password
-    String? newPassword = await showDialog<String>(
+    // Show dialog to edit name
+    String? newPassword;
+    bool isTyping = false;
+
+    await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController passwordController = TextEditingController();
+        TextEditingController nameController =
+            TextEditingController(text: isTyping ? password : '');
+
+        nameController.addListener(() {
+          setState(() {
+            isTyping = nameController.text.isNotEmpty;
+          });
+        });
 
         return AlertDialog(
-          title: const Text('Edit Password'),
+          title: const Text('Password'),
           content: TextField(
-            controller: passwordController,
-            obscureText: true,
+            controller: nameController,
+            decoration: InputDecoration(
+              hintText: '',
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -160,7 +189,8 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
-                Navigator.of(context).pop(passwordController.text);
+                newPassword = nameController.text;
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -168,10 +198,10 @@ class _AccountScreenState extends State<AccountScreen> {
       },
     );
 
-    // Update password if the user saved the changes
+    // Update name if the user saved the changes
     if (newPassword != null) {
       setState(() {
-        password = newPassword;
+        password = newPassword!;
       });
     }
   }
