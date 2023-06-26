@@ -344,8 +344,8 @@ class _AccountScreenState extends State<AccountScreen> {
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController nameController =
-            TextEditingController(text: isTyping ? phoneNumber : '');
+        TextEditingController nameController = TextEditingController(
+            text: previousNumber == "### ### ####" ? "" : previousNumber);
 
         nameController.addListener(() {
           setState(() {
@@ -358,7 +358,13 @@ class _AccountScreenState extends State<AccountScreen> {
           content: TextField(
             controller: nameController,
             decoration: InputDecoration(
-              hintText: '### ### ####',
+              hintText: previousNumber == "### ### ####"
+                  ? '### ### ####'
+                  : previousNumber,
+              suffixIcon: IconButton(
+                onPressed: nameController.clear,
+                icon: const Icon(Icons.clear),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -371,9 +377,13 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
+                // newNumber = nameController.text.isNotEmpty
+                //     ? nameController.text
+                //     : previousNumber!; // Use previousName if text is empty and perform null check
+                //* I feel like it's better if we just reset the number to be nothing if the user doesn't enter anything
                 newNumber = nameController.text.isNotEmpty
                     ? nameController.text
-                    : previousNumber!; // Use previousName if text is empty and perform null check
+                    : "### ### ####";
                 Navigator.of(context).pop();
               },
             ),
