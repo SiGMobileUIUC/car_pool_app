@@ -409,8 +409,8 @@ class _AccountScreenState extends State<AccountScreen> {
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController nameController =
-            TextEditingController(text: isTyping ? socialMedia : '');
+        TextEditingController nameController = TextEditingController(
+            text: previousSocial == "@socialmedia" ? "" : previousSocial);
 
         nameController.addListener(() {
           setState(() {
@@ -423,7 +423,13 @@ class _AccountScreenState extends State<AccountScreen> {
           content: TextField(
             controller: nameController,
             decoration: InputDecoration(
-              hintText: 'socialmedia',
+              hintText: previousSocial == "socialmedia"
+                  ? "@socialmedia"
+                  : previousSocial,
+              suffixIcon: IconButton(
+                onPressed: nameController.clear,
+                icon: const Icon(Icons.clear),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -436,9 +442,13 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
+                // newSocial = nameController.text.isNotEmpty
+                //     ? nameController.text
+                //     : previousSocial!; // Use previousName if text is empty and perform null check
+                //* I feel like it's better if we just reset the number to be nothing if the user doesn't enter anything
                 newSocial = nameController.text.isNotEmpty
                     ? nameController.text
-                    : previousSocial!; // Use previousName if text is empty and perform null check
+                    : "@socialmedia";
                 Navigator.of(context).pop();
               },
             ),
