@@ -649,72 +649,91 @@ class _AccountScreenState extends State<AccountScreen> {
                 ],
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Name'),
-              subtitle: Text(user.getName() ?? ''),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                createEditButton("First Last", 0);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text('Bio'),
-              subtitle: Text(user.getBio() ?? ''),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                createEditButton("School, Major, Year in School", 1);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.drive_eta_rounded),
-              title: const Text('Role'),
-              subtitle: Text(user.getRole() ?? ''),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                createEditButton("Driver, Rider, or Both", 2);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.email),
-              title: const Text('Email'),
-              subtitle: Text(user.getEmail() ?? ''),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                createEditButton("netid@illinois.edu", 3);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.phone),
-              title: const Text('Phone Number'),
-              subtitle: Text(user.getPhoneNumber() ?? ''),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                createEditButton("### ### ####", 4);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.group),
-              title: const Text('Instagram'),
-              subtitle: Text(user.getSocialMedia() ?? ''),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                createEditButton("@socialmedia", 5);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.lock),
-              title: const Text('Password'),
-              subtitle: const Text('********'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                createEditButton("*******", 6);
-              },
-            ),
-          ],
-        ),
+
+           // Start of listview builder
+           ListView.builder(
+            itemCount: 7, 
+            itemBuilder: (BuildContext context, int index) {
+              switch (index) {
+                case 0:
+                  return ListTile(
+                    leading: const Icon(Icons.person),
+                    title: const Text('Name'),
+                    subtitle: Text(user.getName() ?? ''),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      createEditButton("First Last", 0);
+                    },
+                  );
+                case 1:
+                  return ListTile(
+                    leading: const Icon(Icons.info),
+                    title: const Text('Bio'),
+                    subtitle: Text(user.getBio() ?? ''),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      createEditButton("School, Major, Year in School", 1);
+                    },
+                  );
+                case 2:
+                  return ListTile(
+                    leading: const Icon(Icons.drive_eta_rounded),
+                    title: const Text('Role'),
+                    subtitle: Text(user.getRole() ?? ''),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        createEditButton("Driver, Rider, or Both", 2);
+                      },
+                  );
+                case 3:
+                  return ListTile(
+                    leading: const Icon(Icons.email),
+                    title: const Text('Email'),
+                    subtitle: Text(user.getEmail() ?? ''),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      createEditButton("netid@illinois.edu", 3);
+                    },
+                  );
+                case 4:
+                  return ListTile(
+                    leading: const Icon(Icons.phone),
+                    title: const Text('Phone Number'),
+                    subtitle: Text(user.getPhoneNumber() ?? ''),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      createEditButton("### ### ####", 4);
+                    },
+                  );
+                case 5:
+                  return ListTile(
+                    leading: const Icon(Icons.group),
+                    title: const Text('Instagram'),
+                    subtitle: Text(user.getSocialMedia() ?? ''),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      createEditButton("@socialmedia", 5);
+                    },
+                  );
+                case 6:
+                  return ListTile(
+                    leading: const Icon(Icons.lock),
+                    title: const Text('Password'),
+                    subtitle: const Text('********'),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      createEditButton("*******", 6);
+                    },
+                  );
+                default:
+                  return const SizedBox.shrink();
+              }
+            },
+          ),
+          // End of listview builder
+        ],
       ),
+    ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {
