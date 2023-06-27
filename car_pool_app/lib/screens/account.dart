@@ -54,8 +54,8 @@ class _AccountScreenState extends State<AccountScreen> {
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController nameController =
-            TextEditingController(text: isTyping ? displayName : '');
+        TextEditingController nameController = TextEditingController(
+            text: previousName == "First Last" ? "" : previousName);
 
         nameController.addListener(() {
           setState(() {
@@ -69,6 +69,10 @@ class _AccountScreenState extends State<AccountScreen> {
             controller: nameController,
             decoration: InputDecoration(
               hintText: 'First Last',
+              suffixIcon: IconButton(
+                onPressed: nameController.clear,
+                icon: const Icon(Icons.clear),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -81,9 +85,12 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
+                // newName = nameController.text.isNotEmpty
+                //     ? nameController.text
+                //     : previousName!; // Use previousName if text is empty and perform null check
                 newName = nameController.text.isNotEmpty
                     ? nameController.text
-                    : previousName!; // Use previousName if text is empty and perform null check
+                    : "First Last";
                 Navigator.of(context).pop();
               },
             ),
@@ -109,8 +116,8 @@ class _AccountScreenState extends State<AccountScreen> {
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController nameController =
-            TextEditingController(text: isTyping ? email : '');
+        TextEditingController nameController = TextEditingController(
+            text: previousEmail == "netid@illinois.edu" ? "" : previousEmail);
 
         nameController.addListener(() {
           setState(() {
@@ -123,7 +130,11 @@ class _AccountScreenState extends State<AccountScreen> {
           content: TextField(
             controller: nameController,
             decoration: InputDecoration(
-              hintText: 'netid@illinois.edu',
+              hintText: "netid@illinois.edu",
+              suffixIcon: IconButton(
+                onPressed: nameController.clear,
+                icon: const Icon(Icons.clear),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -136,9 +147,13 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
+                // newEmail = nameController.text.isNotEmpty
+                //     ? nameController.text
+                //     : previousEmail!; // Use previousName if text is empty and perform null check
+                //* I feel like it's better if we just reset the number to be nothing if the user doesn't enter anything
                 newEmail = nameController.text.isNotEmpty
                     ? nameController.text
-                    : previousEmail!; // Use previousName if text is empty and perform null check
+                    : "netid@illinois.edu";
                 Navigator.of(context).pop();
               },
             ),
@@ -164,8 +179,8 @@ class _AccountScreenState extends State<AccountScreen> {
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController nameController =
-            TextEditingController(text: isTyping ? password : '');
+        TextEditingController nameController = TextEditingController(
+            text: previousPassword == "********" ? "" : previousPassword);
 
         nameController.addListener(() {
           setState(() {
@@ -178,7 +193,11 @@ class _AccountScreenState extends State<AccountScreen> {
           content: TextField(
             controller: nameController,
             decoration: InputDecoration(
-              hintText: '********',
+              hintText: "********",
+              suffixIcon: IconButton(
+                onPressed: nameController.clear,
+                icon: const Icon(Icons.clear),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -191,9 +210,12 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
+                // newPassword = nameController.text.isNotEmpty
+                //     ? nameController.text
+                //     : previousPassword!; // Use previousName if text is empty and perform null check
                 newPassword = nameController.text.isNotEmpty
                     ? nameController.text
-                    : previousPassword!; // Use previousName if text is empty and perform null check
+                    : "********";
                 Navigator.of(context).pop();
               },
             ),
@@ -219,8 +241,10 @@ class _AccountScreenState extends State<AccountScreen> {
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController nameController =
-            TextEditingController(text: isTyping ? bio : '');
+        TextEditingController nameController = TextEditingController(
+            text: previousBio == "School, Major, Year in School"
+                ? ""
+                : previousBio);
 
         nameController.addListener(() {
           setState(() {
@@ -233,7 +257,11 @@ class _AccountScreenState extends State<AccountScreen> {
           content: TextField(
             controller: nameController,
             decoration: InputDecoration(
-              hintText: 'Share a few words',
+              hintText: "School, Major, Year in School",
+              suffixIcon: IconButton(
+                onPressed: nameController.clear,
+                icon: const Icon(Icons.clear),
+              ),
             ),
           ),
           actions: <Widget>[
@@ -246,9 +274,13 @@ class _AccountScreenState extends State<AccountScreen> {
             TextButton(
               child: const Text('SAVE'),
               onPressed: () {
+                // newBio = nameController.text.isNotEmpty
+                //     ? nameController.text
+                //     : previousBio!; // Use previousName if text is empty and perform null check
+                //* I feel like it's better if we just reset the number to be nothing if the user doesn't enter anything
                 newBio = nameController.text.isNotEmpty
                     ? nameController.text
-                    : previousBio!; // Use previousName if text is empty and perform null check
+                    : "School, Major, Year in School";
                 Navigator.of(context).pop();
               },
             ),
@@ -356,11 +388,10 @@ class _AccountScreenState extends State<AccountScreen> {
         return AlertDialog(
           title: const Text('Phone Number'),
           content: TextField(
+            keyboardType: TextInputType.number,
             controller: nameController,
             decoration: InputDecoration(
-              hintText: previousNumber == "### ### ####"
-                  ? '### ### ####'
-                  : previousNumber,
+              hintText: "### ### ####",
               suffixIcon: IconButton(
                 onPressed: nameController.clear,
                 icon: const Icon(Icons.clear),
@@ -423,9 +454,7 @@ class _AccountScreenState extends State<AccountScreen> {
           content: TextField(
             controller: nameController,
             decoration: InputDecoration(
-              hintText: previousSocial == "socialmedia"
-                  ? "@socialmedia"
-                  : previousSocial,
+              hintText: "@socialmedia",
               suffixIcon: IconButton(
                 onPressed: nameController.clear,
                 icon: const Icon(Icons.clear),
