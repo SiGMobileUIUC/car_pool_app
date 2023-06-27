@@ -1,10 +1,10 @@
-import 'package:car_pool_app/screens/account.dart';
+import 'package:car_pool_app/screens/account/account.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:car_pool_app/screens/frontpage.dart';
 import 'homepage.dart';
 import 'package:car_pool_app/CarpoolPostClass.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class RidePage extends StatefulWidget {

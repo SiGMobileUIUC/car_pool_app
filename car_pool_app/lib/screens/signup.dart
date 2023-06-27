@@ -92,7 +92,7 @@ class _SignupPageState extends State<SignupPage> {
               children: [
                 Column(
                   children: [
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(

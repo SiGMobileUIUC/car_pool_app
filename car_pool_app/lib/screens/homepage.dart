@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Import the necessary screens
 //import 'package:car_pool_app/screens/frontpage.dart';
-import 'package:car_pool_app/screens/account.dart';
+import 'package:car_pool_app/screens/account/account.dart';
 import 'package:car_pool_app/screens/ride.dart';
 
 import 'package:car_pool_app/CarpoolPostClass.dart';
