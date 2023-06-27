@@ -299,10 +299,12 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void editRole() async {
     // Show dialog to select role
+    int index = 0;
     String? newRole = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         String? selectedRole;
+        String? _travel;
 
         return AlertDialog(
           title: const Text('Select Role'),
@@ -312,30 +314,36 @@ class _AccountScreenState extends State<AccountScreen> {
               ListTile(
                 title: const Text('Driver'),
                 leading: Radio(
+                  toggleable: true,
+                  fillColor: MaterialStateProperty.all(Colors.amber),
                   value: 'Driver',
                   groupValue: selectedRole,
                   onChanged: (value) {
-                    selectedRole = value;
+                    selectedRole = value.toString();
                   },
                 ),
               ),
               ListTile(
                 title: const Text('Rider'),
                 leading: Radio(
+                  fillColor: MaterialStateProperty.all(Colors.amber),
+                  toggleable: true,
                   value: 'Rider',
                   groupValue: selectedRole,
                   onChanged: (value) {
-                    selectedRole = value;
+                    selectedRole = value.toString();
                   },
                 ),
               ),
               ListTile(
                 title: const Text('Both'),
                 leading: Radio(
+                  toggleable: true,
+                  fillColor: MaterialStateProperty.all(Colors.amber),
                   value: 'Both',
                   groupValue: selectedRole,
                   onChanged: (value) {
-                    selectedRole = value;
+                    selectedRole = value.toString();
                   },
                 ),
               ),
