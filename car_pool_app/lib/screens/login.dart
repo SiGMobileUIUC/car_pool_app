@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Column(
                   children: [
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(

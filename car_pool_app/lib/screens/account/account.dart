@@ -41,10 +41,12 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
-  void createEditButton(String hintText, int idx) async {
+  //List<String?> _roles = ['Driver', 'Rider', 'Both'];
+
+  void createEditButton(String? hintText, int idx, String? curText) async {
     // Show dialog to edit passed in type
     String? newElement;
-    String? previousElement = hintText; // Store the previous name
+    String? previousElement = curText; // Store the previous name
 
     await showDialog<void>(
       context: context,
@@ -56,6 +58,13 @@ class _AccountScreenState extends State<AccountScreen> {
         return AlertDialog(
           title: const Text('Name'),
           content: TextField(
+            keyboardType: idx == 4
+                ? TextInputType.number
+                : idx == 3
+                    ? TextInputType.emailAddress
+                    : idx == 6
+                        ? TextInputType.visiblePassword
+                        : TextInputType.text,
             controller: elementController,
             decoration: InputDecoration(
               hintText: hintText,
@@ -93,6 +102,7 @@ class _AccountScreenState extends State<AccountScreen> {
     if (newElement != null) {
       switch (idx) {
         case 0:
+          debugPrint("1");
           setState(() {
             user.setName(newElement);
           });
@@ -205,7 +215,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       subtitle: Text(user.getName() ?? ''),
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap: () {
-                        createEditButton("First Last", 0);
+                        createEditButton("First Last", 0, user.getName());
                       },
                     );
                   case 1:
@@ -215,7 +225,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       subtitle: Text(user.getBio() ?? ''),
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap: () {
-                        createEditButton("School, Major, Year in School", 1);
+                        createEditButton(
+                            "School, Major, Year in School", 1, user.getBio());
                       },
                     );
                   case 2:
@@ -225,7 +236,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       subtitle: Text(user.getRole() ?? ''),
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap: () {
-                        createEditButton("Driver, Rider, or Both", 2);
+                        createEditButton(
+                            "Driver, Rider, or Both", 2, user.getRole());
                       },
                     );
                   case 3:
@@ -235,7 +247,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       subtitle: Text(user.getEmail() ?? ''),
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap: () {
-                        createEditButton("netid@illinois.edu", 3);
+                        createEditButton(
+                            "netid@illinois.edu", 3, user.getEmail());
                       },
                     );
                   case 4:
@@ -245,7 +258,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       subtitle: Text(user.getPhoneNumber() ?? ''),
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap: () {
-                        createEditButton("### ### ####", 4);
+                        createEditButton(
+                            "### ### ####", 4, user.getPhoneNumber());
                       },
                     );
                   case 5:
@@ -255,7 +269,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       subtitle: Text(user.getSocialMedia() ?? ''),
                       trailing: const Icon(Icons.arrow_forward_ios),
                       onTap: () {
-                        createEditButton("@socialmedia", 5);
+                        createEditButton(
+                            "@socialmedia", 5, user.getSocialMedia());
                       },
                     );
                   case 6:
@@ -263,9 +278,11 @@ class _AccountScreenState extends State<AccountScreen> {
                       leading: const Icon(Icons.lock),
                       title: const Text('Password'),
                       subtitle: const Text('********'),
-                      trailing: const Icon(Icons.arrow_forward_ios),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                      ),
                       onTap: () {
-                        createEditButton("*******", 6);
+                        createEditButton("*******", 6, user.getPassword());
                       },
                     );
                   default:
