@@ -41,462 +41,6 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
-  // void editName() async {
-  //   // Show dialog to edit name
-  //   String? newName;
-  //   String? previousName = user.getName(); // Store the previous name
-  //   bool isTyping = false;
-
-  //   await showDialog<void>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       TextEditingController nameController = TextEditingController(
-  //           text: previousName == "First Last" ? "" : previousName);
-
-  //       nameController.addListener(() {
-  //         setState(() {
-  //           isTyping = nameController.text.isNotEmpty;
-  //         });
-  //       });
-
-  //       return AlertDialog(
-  //         title: const Text('Name'),
-  //         content: TextField(
-  //           controller: nameController,
-  //           decoration: InputDecoration(
-  //             hintText: 'First Last',
-  //             suffixIcon: IconButton(
-  //               onPressed: nameController.clear,
-  //               icon: const Icon(Icons.clear),
-  //             ),
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: const Text('CANCEL'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           TextButton(
-  //             child: const Text('SAVE'),
-  //             onPressed: () {
-  //               // newName = nameController.text.isNotEmpty
-  //               //     ? nameController.text
-  //               //     : previousName!; // Use previousName if text is empty and perform null check
-  //               newName = nameController.text.isNotEmpty
-  //                   ? nameController.text
-  //                   : "First Last";
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-
-  //   // Update name if the user saved the changes
-  //   if (newName != null) {
-  //     setState(() {
-  //       displayName = newName!;
-  //     });
-  //   }
-  // }
-
-  // void editEmail() async {
-  //   // Show dialog to edit name
-  //   String? newEmail;
-  //   String? previousEmail = email; // Store the previous name
-  //   bool isTyping = false;
-
-  //   await showDialog<void>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       TextEditingController nameController = TextEditingController(
-  //           text: previousEmail == "netid@illinois.edu" ? "" : previousEmail);
-
-  //       nameController.addListener(() {
-  //         setState(() {
-  //           isTyping = nameController.text.isNotEmpty;
-  //         });
-  //       });
-
-  //       return AlertDialog(
-  //         title: const Text('Email'),
-  //         content: TextField(
-  //           controller: nameController,
-  //           decoration: InputDecoration(
-  //             hintText: "netid@illinois.edu",
-  //             suffixIcon: IconButton(
-  //               onPressed: nameController.clear,
-  //               icon: const Icon(Icons.clear),
-  //             ),
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: const Text('CANCEL'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           TextButton(
-  //             child: const Text('SAVE'),
-  //             onPressed: () {
-  //               // newEmail = nameController.text.isNotEmpty
-  //               //     ? nameController.text
-  //               //     : previousEmail!; // Use previousName if text is empty and perform null check
-  //               //* I feel like it's better if we just reset the number to be nothing if the user doesn't enter anything
-  //               newEmail = nameController.text.isNotEmpty
-  //                   ? nameController.text
-  //                   : "netid@illinois.edu";
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-
-  //   // Update name if the user saved the changes
-  //   if (newEmail != null) {
-  //     setState(() {
-  //       email = newEmail!;
-  //     });
-  //   }
-  // }
-
-  // void editPassword() async {
-  //   // Show dialog to edit name
-  //   String? newPassword;
-  //   String? previousPassword = password; // Store the previous name
-  //   bool isTyping = false;
-
-  //   await showDialog<void>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       TextEditingController nameController = TextEditingController(
-  //           text: previousPassword == "********" ? "" : previousPassword);
-
-  //       nameController.addListener(() {
-  //         setState(() {
-  //           isTyping = nameController.text.isNotEmpty;
-  //         });
-  //       });
-
-  //       return AlertDialog(
-  //         title: const Text('Password'),
-  //         content: TextField(
-  //           controller: nameController,
-  //           decoration: InputDecoration(
-  //             hintText: "********",
-  //             suffixIcon: IconButton(
-  //               onPressed: nameController.clear,
-  //               icon: const Icon(Icons.clear),
-  //             ),
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: const Text('CANCEL'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           TextButton(
-  //             child: const Text('SAVE'),
-  //             onPressed: () {
-  //               // newPassword = nameController.text.isNotEmpty
-  //               //     ? nameController.text
-  //               //     : previousPassword!; // Use previousName if text is empty and perform null check
-  //               newPassword = nameController.text.isNotEmpty
-  //                   ? nameController.text
-  //                   : "********";
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-
-  //   // Update name if the user saved the changes
-  //   if (newPassword != null) {
-  //     setState(() {
-  //       password = newPassword!;
-  //     });
-  //   }
-  // }
-
-  // void editBio() async {
-  //   // Show dialog to edit name
-  //   String? newBio;
-  //   String? previousBio = bio; // Store the previous name
-  //   bool isTyping = false;
-
-  //   await showDialog<void>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       TextEditingController nameController = TextEditingController(
-  //           text: previousBio == "School, Major, Year in School"
-  //               ? ""
-  //               : previousBio);
-
-  //       nameController.addListener(() {
-  //         setState(() {
-  //           isTyping = nameController.text.isNotEmpty;
-  //         });
-  //       });
-
-  //       return AlertDialog(
-  //         title: const Text('Bio'),
-  //         content: TextField(
-  //           controller: nameController,
-  //           decoration: InputDecoration(
-  //             hintText: "School, Major, Year in School",
-  //             suffixIcon: IconButton(
-  //               onPressed: nameController.clear,
-  //               icon: const Icon(Icons.clear),
-  //             ),
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: const Text('CANCEL'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           TextButton(
-  //             child: const Text('SAVE'),
-  //             onPressed: () {
-  //               // newBio = nameController.text.isNotEmpty
-  //               //     ? nameController.text
-  //               //     : previousBio!; // Use previousName if text is empty and perform null check
-  //               //* I feel like it's better if we just reset the number to be nothing if the user doesn't enter anything
-  //               newBio = nameController.text.isNotEmpty
-  //                   ? nameController.text
-  //                   : "School, Major, Year in School";
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-
-  //   // Update name if the user saved the changes
-  //   if (newBio != null) {
-  //     setState(() {
-  //       bio = newBio!;
-  //     });
-  //   }
-  // }
-
-  // void editRole() async {
-  //   // Show dialog to select role
-  //   int index = 0;
-  //   String? newRole = await showDialog<String>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       String? selectedRole;
-  //       String? _travel;
-
-  //       return AlertDialog(
-  //         title: const Text('Select Role'),
-  //         content: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             ListTile(
-  //               title: const Text('Driver'),
-  //               leading: Radio(
-  //                 toggleable: true,
-  //                 fillColor: MaterialStateProperty.all(Colors.amber),
-  //                 value: 'Driver',
-  //                 groupValue: selectedRole,
-  //                 onChanged: (value) {
-  //                   selectedRole = value.toString();
-  //                 },
-  //               ),
-  //             ),
-  //             ListTile(
-  //               title: const Text('Rider'),
-  //               leading: Radio(
-  //                 fillColor: MaterialStateProperty.all(Colors.amber),
-  //                 toggleable: true,
-  //                 value: 'Rider',
-  //                 groupValue: selectedRole,
-  //                 onChanged: (value) {
-  //                   selectedRole = value.toString();
-  //                 },
-  //               ),
-  //             ),
-  //             ListTile(
-  //               title: const Text('Both'),
-  //               leading: Radio(
-  //                 toggleable: true,
-  //                 fillColor: MaterialStateProperty.all(Colors.amber),
-  //                 value: 'Both',
-  //                 groupValue: selectedRole,
-  //                 onChanged: (value) {
-  //                   selectedRole = value.toString();
-  //                 },
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: const Text('CANCEL'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           TextButton(
-  //             child: const Text('SAVE'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop(selectedRole);
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-
-  //   // Update role if the user saved the changes
-  //   if (newRole != null) {
-  //     setState(() {
-  //       role = newRole;
-  //     });
-  //   }
-  // }
-
-  // void editPhoneNumber() async {
-  //   // Show dialog to edit name
-  //   String? newNumber;
-  //   String? previousNumber = phoneNumber; // Store the previous name
-  //   bool isTyping = false;
-
-  //   await showDialog<void>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       TextEditingController nameController = TextEditingController(
-  //           text: previousNumber == "### ### ####" ? "" : previousNumber);
-
-  //       nameController.addListener(() {
-  //         setState(() {
-  //           isTyping = nameController.text.isNotEmpty;
-  //         });
-  //       });
-
-  //       return AlertDialog(
-  //         title: const Text('Phone Number'),
-  //         content: TextField(
-  //           keyboardType: TextInputType.number,
-  //           controller: nameController,
-  //           decoration: InputDecoration(
-  //             hintText: "### ### ####",
-  //             suffixIcon: IconButton(
-  //               onPressed: nameController.clear,
-  //               icon: const Icon(Icons.clear),
-  //             ),
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: const Text('CANCEL'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           TextButton(
-  //             child: const Text('SAVE'),
-  //             onPressed: () {
-  //               // newNumber = nameController.text.isNotEmpty
-  //               //     ? nameController.text
-  //               //     : previousNumber!; // Use previousName if text is empty and perform null check
-  //               //* I feel like it's better if we just reset the number to be nothing if the user doesn't enter anything
-  //               newNumber = nameController.text.isNotEmpty
-  //                   ? nameController.text
-  //                   : "### ### ####";
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-
-  //   // Update name if the user saved the changes
-  //   if (newNumber != null) {
-  //     setState(() {
-  //       phoneNumber = newNumber!;
-  //     });
-  //   }
-  // }
-
-  // void editSocialMedia() async {
-  //   // Show dialog to edit name
-  //   String? newSocial;
-  //   String? previousSocial = socialMedia; // Store the previous name
-  //   bool isTyping = false;
-
-  //   await showDialog<void>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       TextEditingController nameController = TextEditingController(
-  //           text: previousSocial == "@socialmedia" ? "" : previousSocial);
-
-  //       nameController.addListener(() {
-  //         setState(() {
-  //           isTyping = nameController.text.isNotEmpty;
-  //         });
-  //       });
-
-  //       return AlertDialog(
-  //         title: const Text('Instagram'),
-  //         content: TextField(
-  //           controller: nameController,
-  //           decoration: InputDecoration(
-  //             hintText: "@socialmedia",
-  //             suffixIcon: IconButton(
-  //               onPressed: nameController.clear,
-  //               icon: const Icon(Icons.clear),
-  //             ),
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: const Text('CANCEL'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           TextButton(
-  //             child: const Text('SAVE'),
-  //             onPressed: () {
-  //               // newSocial = nameController.text.isNotEmpty
-  //               //     ? nameController.text
-  //               //     : previousSocial!; // Use previousName if text is empty and perform null check
-  //               //* I feel like it's better if we just reset the number to be nothing if the user doesn't enter anything
-  //               newSocial = nameController.text.isNotEmpty
-  //                   ? nameController.text
-  //                   : "@socialmedia";
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  //   // Update name if the user saved the changes
-  //   if (newSocial != null) {
-  //     setState(() {
-  //       socialMedia = newSocial!;
-  //     });
-  //   }
-  // }
-
   void createEditButton(String hintText, int idx) async {
     // Show dialog to edit passed in type
     String? newElement;
@@ -770,87 +314,80 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 }
 
-/*
+  // void editRole() async {
+  //   // Show dialog to select role
+  //   int index = 0;
+  //   String? newRole = await showDialog<String>(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       String? selectedRole;
+  //       String? _travel;
 
-// Start of listview builder
-          ListView.builder(
-            itemCount: 7,
-            itemBuilder: (BuildContext context, int index) {
-              switch (index) {
-                case 0:
-                  return ListTile(
-                    leading: const Icon(Icons.person),
-                    title: const Text('Name'),
-                    subtitle: Text(user.getName() ?? ''),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      createEditButton("First Last", 0);
-                    },
-                  );
-                case 1:
-                  return ListTile(
-                    leading: const Icon(Icons.info),
-                    title: const Text('Bio'),
-                    subtitle: Text(user.getBio() ?? ''),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      createEditButton("School, Major, Year in School", 1);
-                    },
-                  );
-                case 2:
-                  return ListTile(
-                    leading: const Icon(Icons.drive_eta_rounded),
-                    title: const Text('Role'),
-                    subtitle: Text(user.getRole() ?? ''),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      createEditButton("Driver, Rider, or Both", 2);
-                    },
-                  );
-                case 3:
-                  return ListTile(
-                    leading: const Icon(Icons.email),
-                    title: const Text('Email'),
-                    subtitle: Text(user.getEmail() ?? ''),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      createEditButton("netid@illinois.edu", 3);
-                    },
-                  );
-                case 4:
-                  return ListTile(
-                    leading: const Icon(Icons.phone),
-                    title: const Text('Phone Number'),
-                    subtitle: Text(user.getPhoneNumber() ?? ''),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      createEditButton("### ### ####", 4);
-                    },
-                  );
-                case 5:
-                  return ListTile(
-                    leading: const Icon(Icons.group),
-                    title: const Text('Instagram'),
-                    subtitle: Text(user.getSocialMedia() ?? ''),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      createEditButton("@socialmedia", 5);
-                    },
-                  );
-                case 6:
-                  return ListTile(
-                    leading: const Icon(Icons.lock),
-                    title: const Text('Password'),
-                    subtitle: const Text('********'),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      createEditButton("*******", 6);
-                    },
-                  );
-                default:
-                  return const SizedBox.shrink();
-              }
-            },
-          ),
+  //       return AlertDialog(
+  //         title: const Text('Select Role'),
+  //         content: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             ListTile(
+  //               title: const Text('Driver'),
+  //               leading: Radio(
+  //                 toggleable: true,
+  //                 fillColor: MaterialStateProperty.all(Colors.amber),
+  //                 value: 'Driver',
+  //                 groupValue: selectedRole,
+  //                 onChanged: (value) {
+  //                   selectedRole = value.toString();
+  //                 },
+  //               ),
+  //             ),
+  //             ListTile(
+  //               title: const Text('Rider'),
+  //               leading: Radio(
+  //                 fillColor: MaterialStateProperty.all(Colors.amber),
+  //                 toggleable: true,
+  //                 value: 'Rider',
+  //                 groupValue: selectedRole,
+  //                 onChanged: (value) {
+  //                   selectedRole = value.toString();
+  //                 },
+  //               ),
+  //             ),
+  //             ListTile(
+  //               title: const Text('Both'),
+  //               leading: Radio(
+  //                 toggleable: true,
+  //                 fillColor: MaterialStateProperty.all(Colors.amber),
+  //                 value: 'Both',
+  //                 groupValue: selectedRole,
+  //                 onChanged: (value) {
+  //                   selectedRole = value.toString();
+  //                 },
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: const Text('CANCEL'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           TextButton(
+  //             child: const Text('SAVE'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop(selectedRole);
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
 
-          */
+  //   // Update role if the user saved the changes
+  //   if (newRole != null) {
+  //     setState(() {
+  //       role = newRole;
+  //     });
+  //   }
+  // }
