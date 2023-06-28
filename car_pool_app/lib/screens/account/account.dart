@@ -58,6 +58,7 @@ class _AccountScreenState extends State<AccountScreen> {
         return AlertDialog(
           title: const Text('Name'),
           content: TextField(
+            //Changing the keyboard type based on which field is being edited
             keyboardType: idx == 4
                 ? TextInputType.number
                 : idx == 3
@@ -98,46 +99,33 @@ class _AccountScreenState extends State<AccountScreen> {
       },
     );
 
-    // Update name if the user saved the changes
+    // Update name for each specific property of the user if the user saved the changes
     if (newElement != null) {
-      switch (idx) {
-        case 0:
-          debugPrint("1");
-          setState(() {
+      setState(() {
+        switch (idx) {
+          case 0:
             user.setName(newElement);
-          });
-          break;
-        case 1:
-          setState(() {
+            break;
+          case 1:
             user.setBio(newElement);
-          });
-          break;
-        case 2:
-          setState(() {
+            break;
+          case 2:
             user.setRole(newElement);
-          });
-          break;
-        case 3:
-          setState(() {
+            break;
+          case 3:
             user.setEmail(newElement);
-          });
-          break;
-        case 4:
-          setState(() {
+            break;
+          case 4:
             user.setPhoneNumber(newElement);
-          });
-          break;
-        case 5:
-          setState(() {
+            break;
+          case 5:
             user.setSocialMedia(newElement);
-          });
-          break;
-        case 6:
-          setState(() {
+            break;
+          case 6:
             user.setPassword(newElement);
-          });
-          break;
-      }
+            break;
+        }
+      });
     }
   }
 
