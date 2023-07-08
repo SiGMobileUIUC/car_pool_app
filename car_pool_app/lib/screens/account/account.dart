@@ -64,7 +64,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 : idx == 3
                     ? TextInputType.emailAddress
                     : idx == 6
-                        ? TextInputType.visiblePassword
+                        ? TextInputType.visiblePassword=
                         : TextInputType.text,
             controller: elementController,
             decoration: InputDecoration(
