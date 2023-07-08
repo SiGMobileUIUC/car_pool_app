@@ -43,6 +43,17 @@ class _AccountScreenState extends State<AccountScreen> {
 
   //List<String?> _roles = ['Driver', 'Rider', 'Both'];
 
+  // List of list of strings to hold hint text and title names
+  List<List<String>> textList = [
+    ['Name', 'Name'],
+    ['Bio', 'Bio'],
+    ['Role', 'Role'],
+    ['Email', 'Email'],
+    ['Phone Number', 'Phone Number'],
+    ['Instagram', 'Instagram'],
+    ['Password', 'Password'],
+  ];
+  
   void createEditButton(String? hintText, int idx, String? curText) async {
     // Show dialog to edit passed in type
     String? newElement;
@@ -318,6 +329,9 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 }
+
+
+/////////////////////////////////////////////////////////
 
   // void editRole() async {
   //   // Show dialog to select role
