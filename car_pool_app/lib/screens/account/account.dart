@@ -6,6 +6,7 @@ import 'package:car_pool_app/screens/frontpage.dart';
 import 'package:car_pool_app/screens/homepage.dart';
 import 'package:car_pool_app/screens/ride.dart';
 import 'package:car_pool_app/screens/account/account_class.dart';
+import 'package:car_pool_app/screens/account/account_data_getters.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -44,16 +45,7 @@ class _AccountScreenState extends State<AccountScreen> {
   //List<String?> _roles = ['Driver', 'Rider', 'Both'];
 
   // List of list of strings to hold hint text and title names
-  List<List<String>> textList = [
-    ['Name', 'Name'],
-    ['Bio', 'Bio'],
-    ['Role', 'Role'],
-    ['Email', 'Email'],
-    ['Phone Number', 'Phone Number'],
-    ['Instagram', 'Instagram'],
-    ['Password', 'Password'],
-  ];
-  
+
   void createEditButton(String? hintText, int idx, String? curText) async {
     // Show dialog to edit passed in type
     String? newElement;
@@ -75,7 +67,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 : idx == 3
                     ? TextInputType.emailAddress
                     : idx == 6
-                        ? TextInputType.visiblePassword=
+                        ? TextInputType.visiblePassword
                         : TextInputType.text,
             controller: elementController,
             decoration: InputDecoration(
@@ -113,29 +105,7 @@ class _AccountScreenState extends State<AccountScreen> {
     // Update name for each specific property of the user if the user saved the changes
     if (newElement != null) {
       setState(() {
-        switch (idx) {
-          case 0:
-            user.setName(newElement);
-            break;
-          case 1:
-            user.setBio(newElement);
-            break;
-          case 2:
-            user.setRole(newElement);
-            break;
-          case 3:
-            user.setEmail(newElement);
-            break;
-          case 4:
-            user.setPhoneNumber(newElement);
-            break;
-          case 5:
-            user.setSocialMedia(newElement);
-            break;
-          case 6:
-            user.setPassword(newElement);
-            break;
-        }
+        setUserInfo(user, idx, newElement!);
       });
     }
   }
@@ -206,87 +176,16 @@ class _AccountScreenState extends State<AccountScreen> {
             delegate: SliverChildBuilderDelegate(
               childCount: 7,
               (BuildContext context, int index) {
-                switch (index) {
-                  case 0:
-                    return ListTile(
-                      leading: const Icon(Icons.person),
-                      title: const Text('Name'),
-                      subtitle: Text(user.getName() ?? ''),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        createEditButton("First Last", 0, user.getName());
-                      },
-                    );
-                  case 1:
-                    return ListTile(
-                      leading: const Icon(Icons.info),
-                      title: const Text('Bio'),
-                      subtitle: Text(user.getBio() ?? ''),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        createEditButton(
-                            "School, Major, Year in School", 1, user.getBio());
-                      },
-                    );
-                  case 2:
-                    return ListTile(
-                      leading: const Icon(Icons.drive_eta_rounded),
-                      title: const Text('Role'),
-                      subtitle: Text(user.getRole() ?? ''),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        createEditButton(
-                            "Driver, Rider, or Both", 2, user.getRole());
-                      },
-                    );
-                  case 3:
-                    return ListTile(
-                      leading: const Icon(Icons.email),
-                      title: const Text('Email'),
-                      subtitle: Text(user.getEmail() ?? ''),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        createEditButton(
-                            "netid@illinois.edu", 3, user.getEmail());
-                      },
-                    );
-                  case 4:
-                    return ListTile(
-                      leading: const Icon(Icons.phone),
-                      title: const Text('Phone Number'),
-                      subtitle: Text(user.getPhoneNumber() ?? ''),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        createEditButton(
-                            "### ### ####", 4, user.getPhoneNumber());
-                      },
-                    );
-                  case 5:
-                    return ListTile(
-                      leading: const Icon(Icons.group),
-                      title: const Text('Instagram'),
-                      subtitle: Text(user.getSocialMedia() ?? ''),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        createEditButton(
-                            "@socialmedia", 5, user.getSocialMedia());
-                      },
-                    );
-                  case 6:
-                    return ListTile(
-                      leading: const Icon(Icons.lock),
-                      title: const Text('Password'),
-                      subtitle: const Text('********'),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                      ),
-                      onTap: () {
-                        createEditButton("*******", 6, user.getPassword());
-                      },
-                    );
-                  default:
-                    return const SizedBox.shrink();
-                }
+                return ListTile(
+                  leading: Icon(iconList[index]),
+                  title: Text(textList[index][0]),
+                  subtitle: Text(getUserInfo(user, index)),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    createEditButton(
+                        textList[index][1], index, getUserInfo(user, index));
+                  },
+                );
               },
             ),
           ),
