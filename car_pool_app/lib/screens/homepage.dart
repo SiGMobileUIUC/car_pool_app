@@ -147,6 +147,7 @@ class HomePage extends StatelessWidget {
             );
           }
         },
+                selectedItemColor: Colors.black,
       ),
     );
   }

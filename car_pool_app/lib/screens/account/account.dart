@@ -222,8 +222,8 @@ class _AccountScreenState extends State<AccountScreen> {
             icon: Icon(Icons.person),
             label: 'Account',
           ),
-        ],
-        selectedItemColor: Colors.black,
+        ],        selectedItemColor: Colors.black,
+
       ),
     );
   }
