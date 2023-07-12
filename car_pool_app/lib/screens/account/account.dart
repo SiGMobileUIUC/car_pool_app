@@ -43,9 +43,7 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   //List<String?> _roles = ['Driver', 'Rider', 'Both'];
-
-  // List of list of strings to hold hint text and title names
-
+  
   void createEditButton(String? hintText, int idx, String? curText) async {
     // Show dialog to edit passed in type
     String? newElement;

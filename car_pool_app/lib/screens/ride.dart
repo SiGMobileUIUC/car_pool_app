@@ -6,7 +6,6 @@ import 'homepage.dart';
 import 'package:car_pool_app/CarpoolPostClass.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class RidePage extends StatefulWidget {
   const RidePage({Key? key}) : super(key: key);
   @override
@@ -83,7 +82,7 @@ class _RidePageState extends State<RidePage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
+                FloatingActionButton(
                   onPressed: () {
                     showDialog(
                       //TODO : format the dialog box to look better
@@ -166,7 +165,7 @@ class _RidePageState extends State<RidePage> {
                               child: const Text('Cancel'),
                             ),
                             TextButton(
-                              onPressed: ()  {
+                              onPressed: () {
                                 // Add the new post to the list
                                 setState(() {
                                   postDescription = CarPoolPost(
@@ -176,7 +175,7 @@ class _RidePageState extends State<RidePage> {
                                       destination: tempDestination,
                                       time: tempTime,
                                       availableSeats: tempAvailableSeats);
-                                      postings.add(postDescription);
+                                  postings.add(postDescription);
                                 });
                                 Navigator.pop(context);
                               },
@@ -187,7 +186,8 @@ class _RidePageState extends State<RidePage> {
                       },
                     );
                   },
-                  child: const Text('Create New Post'),
+                  backgroundColor: (Colors.black),
+                  child: const Icon(Icons.add),
                 ),
               ],
             ),
@@ -213,10 +213,11 @@ class _RidePageState extends State<RidePage> {
             );
           }
         },
-    ),
+      ),
     );
   }
 }
+
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -232,8 +233,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: onTap,
-      selectedItemColor: Colors.black, 
-      //unselectedItemColor: Colors.grey, 
+      selectedItemColor: Colors.black,
+      //unselectedItemColor: Colors.grey,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
