@@ -39,7 +39,7 @@ class _RidePageState extends State<RidePage> {
         elevation: 0,
         backgroundColor: Colors.grey[200],
         title: const Text(
-          'Ride',
+          'Ride 🚗',
           style: TextStyle(
             fontSize: 50,
             fontWeight: FontWeight.bold,
@@ -74,13 +74,13 @@ class _RidePageState extends State<RidePage> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                const Text(
-                  'Make a New Post',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // const Text(
+                //   'Make a New Post',
+                //   style: TextStyle(
+                //     fontSize: 20,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
                 const SizedBox(height: 16),
                 FloatingActionButton(
                   onPressed: () {
@@ -187,7 +187,7 @@ class _RidePageState extends State<RidePage> {
                     );
                   },
                   backgroundColor: (Colors.black),
-                  child: const Icon(Icons.add),
+                  child: const Icon(Icons.add, size: 50),
                 ),
               ],
             ),
