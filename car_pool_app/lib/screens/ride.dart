@@ -58,29 +58,63 @@ class _RidePageState extends State<RidePage> {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                    title: Text(
-                        '${postings[index].departure} to ${postings[index].destination}'),
+                    title: Text(  
+                      '${postings[index].departure} to ${postings[index].destination}'
+                    ),
                     subtitle: Text(
                       'Time: ${postings[index].time}\nAvailable Seats: ${postings[index].availableSeats}',
                     ),
-                    trailing: Text(
-                        'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}'),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}'
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete, size: 15,),
+                            onPressed: () {
+                            // Show a confirmation message
+                              showDialog(
+                                context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Delete Post'),
+                                      content: const Text('Are you sure you want to delete this post?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context); // Close confirmation message
+                                          },
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                            // Remove the post
+                                              postings.removeAt(index);
+                                            });
+                                            Navigator.pop(context); // Close confirmation message
+                                          },
+                                        child: const Text('Delete'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                // const Text(
-                //   'Make a New Post',
-                //   style: TextStyle(
-                //     fontSize: 20,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
                 const SizedBox(height: 16),
                 FloatingActionButton(
                   onPressed: () {
@@ -166,18 +200,46 @@ class _RidePageState extends State<RidePage> {
                             ),
                             TextButton(
                               onPressed: () {
-                                // Add the new post to the list
-                                setState(() {
-                                  postDescription = CarPoolPost(
+                                // Check valid inputs
+                                if (tempName.isNotEmpty &&
+                                    tempCarType.isNotEmpty &&
+                                    tempDeparture.isNotEmpty &&
+                                    tempDestination.isNotEmpty &&
+                                    tempTime.isNotEmpty &&
+                                    tempAvailableSeats > 0) {
+                                  // Add post if valid
+                                  setState(() {
+                                    postDescription = CarPoolPost(
                                       driverName: tempName,
                                       carType: tempCarType,
                                       departure: tempDeparture,
                                       destination: tempDestination,
                                       time: tempTime,
-                                      availableSeats: tempAvailableSeats);
-                                  postings.add(postDescription);
-                                });
-                                Navigator.pop(context);
+                                      availableSeats: tempAvailableSeats,
+                                    );
+                                    postings.add(postDescription);
+                                  });
+                                  Navigator.pop(context);
+                                } else {
+                                  // Show an error message 
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Error'),
+                                        content: const Text('Please fill all fields with valid values.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: const Text('Post'),
                             ),
