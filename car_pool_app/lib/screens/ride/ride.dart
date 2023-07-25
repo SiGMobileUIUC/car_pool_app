@@ -13,13 +13,7 @@ class RidePage extends StatefulWidget {
   @override
   State<RidePage> createState() => _RidePageState();
 }
-
-
-
 class _RidePageState extends State<RidePage> {
-
-
-
 
   int currentIndex = 1; // Added currentIndex variable
   CarPoolPost postDescription = CarPoolPost(
@@ -79,7 +73,7 @@ class _RidePageState extends State<RidePage> {
                             'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}'),
                         IconButton(
                           icon: const Icon(
-                            Icons.delete, size: 15,
+                            Icons.delete, size: 15, color: Colors.black,
                           ),
                           onPressed: () {
                             // Show a confirmation message
