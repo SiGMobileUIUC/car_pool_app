@@ -2,9 +2,11 @@ import 'package:car_pool_app/screens/account/account.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:car_pool_app/screens/frontpage.dart';
-import 'homepage.dart';
+import '../homepage.dart';
 import 'package:car_pool_app/CarpoolPostClass.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:car_pool_app/screens/ride/ride_functions.dart';
+import 'package:flutter/services.dart';
 
 class RidePage extends StatefulWidget {
   const RidePage({Key? key}) : super(key: key);
@@ -71,7 +73,8 @@ class _RidePageState extends State<RidePage> {
                             'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}'),
                         IconButton(
                           icon: const Icon(
-                            Icons.delete, size: 15,
+                            Icons.delete,
+                            size: 15,
                           ),
                           onPressed: () {
                             // Show a confirmation message
@@ -114,23 +117,37 @@ class _RidePageState extends State<RidePage> {
               },
             ),
           ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 16),
-                  FloatingActionButton(
-                    onPressed: () {
-                      showDialog(
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                FloatingActionButton(
+                  onPressed: () {
+                    showDialog(
                       //TODO : format the dialog box to look better
                       //TODO : Validate that all entries are filled with correct data types before submitting post
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('New Post'),
-                            content: Column(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('New Post'),
+                          content: SingleChildScrollView(
+                            child: Column(
                               children: [
-                                TextField(
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.always,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a name';
+                                    }
+                                    if (isNumeric(value)) {
+                                      return "Can't be a number";
+                                    }
+                                    if (value.length < 2) {
+                                      return 'Must be more than 1 charater';
+                                    }
+                                    return null;
+                                  },
                                   decoration: const InputDecoration(
                                     hintText: 'Name of the driver',
                                   ),
@@ -140,7 +157,20 @@ class _RidePageState extends State<RidePage> {
                                     // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.always,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a car type';
+                                    }
+                                    if (isNumeric(value)) {
+                                      return "Can't be a number";
+                                    }
+                                    if (value.length < 2) {
+                                      return 'Must be more than 1 charater';
+                                    }
+                                    return null;
+                                  },
                                   decoration: const InputDecoration(
                                     hintText: 'Car Type',
                                   ),
@@ -150,7 +180,17 @@ class _RidePageState extends State<RidePage> {
                                     // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.always,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a departure location';
+                                    }
+                                    if (value.length < 2) {
+                                      return 'Must be more than 1 charater';
+                                    }
+                                    return null;
+                                  },
                                   decoration: const InputDecoration(
                                     hintText: 'Departure',
                                   ),
@@ -160,7 +200,18 @@ class _RidePageState extends State<RidePage> {
                                     // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.always,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a destination location';
+                                    }
+
+                                    if (value.length < 2) {
+                                      return 'Must be more than 1 charater';
+                                    }
+                                    return null;
+                                  },
                                   decoration: const InputDecoration(
                                     hintText: 'Destination',
                                   ),
@@ -170,7 +221,21 @@ class _RidePageState extends State<RidePage> {
                                     // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
+                                TextFormField(
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(RegExp(
+                                        r'^(?:[01]?\d|2[0-3])(?::(?:[0-5]\d?)?)?$')),
+                                  ],
+                                  autovalidateMode: AutovalidateMode.always,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a time of departure';
+                                    }
+                                    if (value.length < 2) {
+                                      return 'Must be more than 1 charater';
+                                    }
+                                    return null;
+                                  },
                                   keyboardType: TextInputType.datetime,
                                   decoration: const InputDecoration(
                                     hintText: 'Time',
@@ -181,86 +246,104 @@ class _RidePageState extends State<RidePage> {
                                     // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
+                                TextFormField(
+                                  autovalidateMode: AutovalidateMode.always,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter an amount of available seats';
+                                    }
+                                    if (isNumeric(value)) {
+                                    } else {
+                                      return 'Must be a number';
+                                    }
+                                    if (value.length < 2) {
+                                      return 'Must be more than 1 charater';
+                                    }
+                                    return null;
+                                  },
                                   keyboardType: TextInputType.number,
                                   decoration: const InputDecoration(
                                     hintText: 'Available Seats',
                                   ),
                                   onChanged: (value) {
-                                    tempAvailableSeats = int.parse(value);
+                                    if (isNumeric(value)) {
+                                      tempAvailableSeats = int.parse(value);
+                                    } else {
+                                      tempAvailableSeats = 0;
+                                    }
                                     // Update the post value
                                     // You can store the value in a database or a state management solution
                                   },
                                 ),
                               ],
                             ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Check valid inputs
+                                if (tempName.isNotEmpty &&
+                                    tempCarType.isNotEmpty &&
+                                    tempDeparture.isNotEmpty &&
+                                    tempDestination.isNotEmpty &&
+                                    tempTime.isNotEmpty &&
+                                    tempAvailableSeats > 0) {
+                                  // Add post if valid
+                                  setState(() {
+                                    postDescription = CarPoolPost(
+                                      driverName: tempName,
+                                      carType: tempCarType,
+                                      departure: tempDeparture,
+                                      destination: tempDestination,
+                                      time: tempTime,
+                                      availableSeats: tempAvailableSeats,
+                                    );
+                                    postings.add(postDescription);
+                                  });
                                   Navigator.pop(context);
-                                },
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  // Check valid inputs
-                                  if (tempName.isNotEmpty &&
-                                      tempCarType.isNotEmpty &&
-                                      tempDeparture.isNotEmpty &&
-                                      tempDestination.isNotEmpty &&
-                                      tempTime.isNotEmpty &&
-                                      tempAvailableSeats > 0) {
-                                      // Add post if valid
-                                        setState(() {
-                                          postDescription = CarPoolPost(
-                                            driverName: tempName,
-                                            carType: tempCarType,
-                                            departure: tempDeparture,
-                                            destination: tempDestination,
-                                            time: tempTime,
-                                            availableSeats: tempAvailableSeats,
-                                          );
-                                          postings.add(postDescription);
-                                        });
-                                        Navigator.pop(context);
-                                      } else {
-                                        // Show an error message
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: const Text('Error'),
-                                              content: const Text(
-                                                'Please fill all fields with valid values.'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text('OK'),
-                                                  ),
-                                                ],
-                                            );
-                                          },
-                                        );
-                                      }
+                                } else {
+                                  // Show an error message
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Error'),
+                                        content: const Text(
+                                            'Please fill all fields with valid values.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
                                     },
-                                    child: const Text('Post'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        backgroundColor: (Colors.black),
-                        child: const Icon(Icons.add, size: 50),
-                      ),
-                    ],
-                  ),
+                                  );
+                                }
+                              },
+                              child: const Text('Post'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  backgroundColor: (Colors.black),
+                  child: const Icon(Icons.add, size: 50),
                 ),
               ],
             ),
-      
+          ),
+        ],
+      ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (int index) {

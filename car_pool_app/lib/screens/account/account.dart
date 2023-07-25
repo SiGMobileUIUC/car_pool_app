@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:car_pool_app/screens/frontpage.dart';
 import 'package:car_pool_app/screens/homepage.dart';
-import 'package:car_pool_app/screens/ride.dart';
+import 'package:car_pool_app/screens/ride/ride.dart';
 import 'package:car_pool_app/screens/account/account_class.dart';
 import 'package:car_pool_app/screens/account/account_data_getters.dart';
 
