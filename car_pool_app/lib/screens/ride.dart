@@ -12,7 +12,35 @@ class RidePage extends StatefulWidget {
   State<RidePage> createState() => _RidePageState();
 }
 
+// defining a reference to the Firestore collection
+// final CollectionReference postsCollection =
+//     FirebaseFirestore.instance.collection('Ride Posts');
+
 class _RidePageState extends State<RidePage> {
+  // fetch and populate post
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchPosts();
+  // }
+
+  // // fetch post function
+  // void fetchPosts() async {
+  //   final snapshot = await postsCollection.get();
+  //   setState(() {
+  //     postings = snapshot.docs
+  //         .map((doc) => CarPoolPost(
+  //               driverName: doc['driverName'],
+  //               carType: doc['carType'],
+  //               departure: doc['departure'],
+  //               destination: doc['destination'],
+  //               time: doc['time'],
+  //               availableSeats: doc['availableSeats'],
+  //             ))
+  //         .toList();
+  //   });
+  // }
+
   int currentIndex = 1; // Added currentIndex variable
   CarPoolPost postDescription = CarPoolPost(
     driverName: 'Loading...',
@@ -71,7 +99,9 @@ class _RidePageState extends State<RidePage> {
                             'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}'),
                         IconButton(
                           icon: const Icon(
-                            Icons.delete, size: 15,
+                            Icons.delete,
+                            size: 15,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             // Show a confirmation message
@@ -114,153 +144,162 @@ class _RidePageState extends State<RidePage> {
               },
             ),
           ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 16),
-                  FloatingActionButton(
-                    onPressed: () {
-                      showDialog(
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                FloatingActionButton(
+                  onPressed: () {
+                    showDialog(
                       //TODO : format the dialog box to look better
                       //TODO : Validate that all entries are filled with correct data types before submitting post
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('New Post'),
-                            content: Column(
-                              children: [
-                                TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Name of the driver',
-                                  ),
-                                  onChanged: (value) {
-                                    tempName = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
-                                  },
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('New Post'),
+                          content: Column(
+                            children: [
+                              TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Name of the driver',
                                 ),
-                                TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Car Type',
-                                  ),
-                                  onChanged: (value) {
-                                    tempCarType = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
-                                  },
-                                ),
-                                TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Departure',
-                                  ),
-                                  onChanged: (value) {
-                                    tempDeparture = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
-                                  },
-                                ),
-                                TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Destination',
-                                  ),
-                                  onChanged: (value) {
-                                    tempDestination = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
-                                  },
-                                ),
-                                TextField(
-                                  keyboardType: TextInputType.datetime,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Time',
-                                  ),
-                                  onChanged: (value) {
-                                    tempTime = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
-                                  },
-                                ),
-                                TextField(
-                                  keyboardType: TextInputType.number,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Available Seats',
-                                  ),
-                                  onChanged: (value) {
-                                    tempAvailableSeats = int.parse(value);
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
-                                  },
-                                ),
-                              ],
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
+                                onChanged: (value) {
+                                  tempName = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
                                 },
-                                child: const Text('Cancel'),
                               ),
-                              TextButton(
-                                onPressed: () {
-                                  // Check valid inputs
-                                  if (tempName.isNotEmpty &&
-                                      tempCarType.isNotEmpty &&
-                                      tempDeparture.isNotEmpty &&
-                                      tempDestination.isNotEmpty &&
-                                      tempTime.isNotEmpty &&
-                                      tempAvailableSeats > 0) {
-                                      // Add post if valid
-                                        setState(() {
-                                          postDescription = CarPoolPost(
-                                            driverName: tempName,
-                                            carType: tempCarType,
-                                            departure: tempDeparture,
-                                            destination: tempDestination,
-                                            time: tempTime,
-                                            availableSeats: tempAvailableSeats,
-                                          );
-                                          postings.add(postDescription);
-                                        });
-                                        Navigator.pop(context);
-                                      } else {
-                                        // Show an error message
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: const Text('Error'),
-                                              content: const Text(
-                                                'Please fill all fields with valid values.'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text('OK'),
-                                                  ),
-                                                ],
-                                            );
-                                          },
-                                        );
-                                      }
+                              TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Car Type',
+                                ),
+                                onChanged: (value) {
+                                  tempCarType = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Departure',
+                                ),
+                                onChanged: (value) {
+                                  tempDeparture = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Destination',
+                                ),
+                                onChanged: (value) {
+                                  tempDestination = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                keyboardType: TextInputType.datetime,
+                                decoration: const InputDecoration(
+                                  hintText: 'Time',
+                                ),
+                                onChanged: (value) {
+                                  tempTime = value;
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                              TextField(
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  hintText: 'Available Seats',
+                                ),
+                                onChanged: (value) {
+                                  tempAvailableSeats = int.parse(value);
+                                  // Update the post value
+                                  // You can store the value in a database or a state management solution
+                                },
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Check valid inputs
+                                if (tempName.isNotEmpty &&
+                                    tempCarType.isNotEmpty &&
+                                    tempDeparture.isNotEmpty &&
+                                    tempDestination.isNotEmpty &&
+                                    tempTime.isNotEmpty &&
+                                    tempAvailableSeats > 0) {
+                                  // Add post if valid
+                                  setState(() {
+                                    postDescription = CarPoolPost(
+                                      driverName: tempName,
+                                      carType: tempCarType,
+                                      departure: tempDeparture,
+                                      destination: tempDestination,
+                                      time: tempTime,
+                                      availableSeats: tempAvailableSeats,
+                                    );
+                                    postings.add(postDescription);
+                                  });
+
+                                  // Save the post to Firebase
+                                  // await postsCollection.add({
+                                  //   'driverName': tempName,
+                                  //   'carType': tempCarType,
+                                  //   'departure': tempDeparture,
+                                  //   'destination': tempDestination,
+                                  //   'time': tempTime,
+                                  //   'availableSeats': tempAvailableSeats,
+                                  // });
+                                  Navigator.pop(context);
+                                } else {
+                                  // Show an error message
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Error'),
+                                        content: const Text(
+                                            'Please fill all fields with valid values.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
                                     },
-                                    child: const Text('Post'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        backgroundColor: (Colors.black),
-                        child: const Icon(Icons.add, size: 50),
-                      ),
-                    ],
-                  ),
+                                  );
+                                }
+                              },
+                              child: const Text('Post'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  backgroundColor: (Colors.black),
+                  child: const Icon(Icons.add, size: 50),
                 ),
               ],
             ),
-      
+          ),
+        ],
+      ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (int index) {

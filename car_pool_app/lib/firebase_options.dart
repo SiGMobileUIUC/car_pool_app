@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '286775143293',
     projectId: 'carpool-app-29f84',
     storageBucket: 'carpool-app-29f84.appspot.com',
-    iosClientId: '286775143293-2n9eb0r72fr1mmu7r6kec3dc364osjnd.apps.googleusercontent.com',
+    iosClientId:
+        '286775143293-2n9eb0r72fr1mmu7r6kec3dc364osjnd.apps.googleusercontent.com',
     iosBundleId: 'com.example.carPoolApp',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '286775143293',
     projectId: 'carpool-app-29f84',
     storageBucket: 'carpool-app-29f84.appspot.com',
-    iosClientId: '286775143293-2n9eb0r72fr1mmu7r6kec3dc364osjnd.apps.googleusercontent.com',
+    iosClientId:
+        '286775143293-2n9eb0r72fr1mmu7r6kec3dc364osjnd.apps.googleusercontent.com',
     iosBundleId: 'com.example.carPoolApp',
   );
 }
