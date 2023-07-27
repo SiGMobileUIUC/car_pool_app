@@ -13,8 +13,9 @@ class RidePage extends StatefulWidget {
   @override
   State<RidePage> createState() => _RidePageState();
 }
-class _RidePageState extends State<RidePage> {
 
+class _RidePageState extends State<RidePage> {
+  
   int currentIndex = 1; // Added currentIndex variable
   CarPoolPost postDescription = CarPoolPost(
     driverName: 'Loading...',
@@ -73,7 +74,9 @@ class _RidePageState extends State<RidePage> {
                             'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}'),
                         IconButton(
                           icon: const Icon(
-                            Icons.delete, size: 15, color: Colors.black,
+                            Icons.delete,
+                            size: 15,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             // Show a confirmation message
@@ -116,153 +119,150 @@ class _RidePageState extends State<RidePage> {
               },
             ),
           ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 16),
-                  FloatingActionButton(
-                    onPressed: () {
-                      showDialog(
-                      //TODO : format the dialog box to look better
-                      //TODO : Validate that all entries are filled with correct data types before submitting post
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('New Post'),
-                            content: Column(
+           Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                FloatingActionButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Make A Post!'),
+                          content: Form(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Name of the driver',
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Name',
+                                    prefixIcon: Icon(Icons.person),
                                   ),
                                   onChanged: (value) {
                                     tempName = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Car Type',
+                                const SizedBox(height: 20),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Car Type',
+                                    prefixIcon: Icon(Icons.directions_car),
                                   ),
                                   onChanged: (value) {
                                     tempCarType = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Departure',
+                                SizedBox(height: 20),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Departure',
+                                    prefixIcon: Icon(Icons.location_on),
                                   ),
                                   onChanged: (value) {
                                     tempDeparture = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Destination',
+                                SizedBox(height: 20),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Destination',
+                                    prefixIcon: Icon(Icons.location_on),
                                   ),
                                   onChanged: (value) {
                                     tempDestination = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
+                                SizedBox(height: 20),
+                                TextFormField(
                                   keyboardType: TextInputType.datetime,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Time',
+                                  decoration: InputDecoration(
+                                    labelText: 'Time',
+                                    prefixIcon: Icon(Icons.access_time),
                                   ),
                                   onChanged: (value) {
                                     tempTime = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
                                   },
                                 ),
-                                TextField(
+                                SizedBox(height: 20),
+                                TextFormField(
                                   keyboardType: TextInputType.number,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Available Seats',
+                                  decoration: InputDecoration(
+                                    labelText: 'Available Seats',
+                                    prefixIcon: Icon(Icons.event_seat),
                                   ),
                                   onChanged: (value) {
-                                    tempAvailableSeats = int.parse(value);
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
+                                    tempAvailableSeats = int.tryParse(value) ?? 0;
                                   },
                                 ),
                               ],
                             ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (tempName.isNotEmpty &&
+                                    tempCarType.isNotEmpty &&
+                                    tempDeparture.isNotEmpty &&
+                                    tempDestination.isNotEmpty &&
+                                    tempTime.isNotEmpty &&
+                                    tempAvailableSeats > 0) {
+                                  setState(() {
+                                    postDescription = CarPoolPost(
+                                      driverName: tempName,
+                                      carType: tempCarType,
+                                      departure: tempDeparture,
+                                      destination: tempDestination,
+                                      time: tempTime,
+                                      availableSeats: tempAvailableSeats,
+                                    );
+                                    postings.add(postDescription);
+                                  });
                                   Navigator.pop(context);
-                                },
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  // Check valid inputs
-                                  if (tempName.isNotEmpty &&
-                                      tempCarType.isNotEmpty &&
-                                      tempDeparture.isNotEmpty &&
-                                      tempDestination.isNotEmpty &&
-                                      tempTime.isNotEmpty &&
-                                      tempAvailableSeats > 0) {
-                                      // Add post if valid
-                                        setState(() {
-                                          postDescription = CarPoolPost(
-                                            driverName: tempName,
-                                            carType: tempCarType,
-                                            departure: tempDeparture,
-                                            destination: tempDestination,
-                                            time: tempTime,
-                                            availableSeats: tempAvailableSeats,
-                                          );
-                                          postings.add(postDescription);
-                                        });
-                                        Navigator.pop(context);
-                                      } else {
-                                        // Show an error message
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: const Text('Error'),
-                                              content: const Text(
-                                                'Please fill all fields with valid values.'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text('OK'),
-                                                  ),
-                                                ],
-                                            );
-                                          },
-                                        );
-                                      }
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Error'),
+                                        content: const Text(
+                                          'Please fill all fields with valid values.',
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
                                     },
-                                    child: const Text('Post'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        backgroundColor: (Colors.black),
-                        child: const Icon(Icons.add, size: 50),
-                      ),
-                    ],
-                  ),
+                                  );
+                                }
+                              },
+                              child: const Text('Post'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  backgroundColor: Colors.black,
+                  child: const Icon(Icons.add, size: 50),
                 ),
               ],
             ),
-      
+          ),
+        ],
+      ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (int index) {
