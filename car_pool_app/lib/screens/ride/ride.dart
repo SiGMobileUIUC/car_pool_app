@@ -75,6 +75,7 @@ class _RidePageState extends State<RidePage> {
                           icon: const Icon(
                             Icons.delete,
                             size: 15,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             // Show a confirmation message
@@ -121,18 +122,23 @@ class _RidePageState extends State<RidePage> {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 FloatingActionButton(
                   onPressed: () {
+                    tempName = "";
+                    tempCarType = "";
+                    tempDeparture = "";
+                    tempDestination = "";
+                    tempTime = "";
+                    tempAvailableSeats = 0;
                     showDialog(
-                      //TODO : format the dialog box to look better
-                      //TODO : Validate that all entries are filled with correct data types before submitting post
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('New Post'),
+                          title: const Text('Make A Post!'),
                           content: SingleChildScrollView(
                             child: Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 TextFormField(
                                   inputFormatters: <TextInputFormatter>[
@@ -152,12 +158,13 @@ class _RidePageState extends State<RidePage> {
                                     return null;
                                   },
                                   decoration: const InputDecoration(
-                                    hintText: 'Name of the driver',
+                                    labelText: 'Name of the driver',
+                                    prefixIcon: Icon(Icons.person),
                                   ),
                                   onChanged: (value) {
-                                    tempName = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
+                                    if (value.length >= 2) {
+                                      tempName = value;
+                                    }
                                   },
                                 ),
                                 TextFormField(
@@ -178,12 +185,13 @@ class _RidePageState extends State<RidePage> {
                                     return null;
                                   },
                                   decoration: const InputDecoration(
-                                    hintText: 'Car Type',
+                                    labelText: 'Car Type',
+                                    prefixIcon: Icon(Icons.directions_car),
                                   ),
                                   onChanged: (value) {
-                                    tempCarType = value;
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
+                                    if (value.length >= 2) {
+                                      tempCarType = value;
+                                    }
                                   },
                                 ),
                                 TextFormField(
@@ -201,14 +209,13 @@ class _RidePageState extends State<RidePage> {
                                     return null;
                                   },
                                   decoration: const InputDecoration(
-                                    hintText: 'Departure',
+                                    labelText: 'Departure',
+                                    prefixIcon: Icon(Icons.location_on),
                                   ),
                                   onChanged: (value) {
                                     if (value.length >= 2) {
                                       tempDeparture = value;
                                     }
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
                                   },
                                 ),
                                 TextFormField(
@@ -220,21 +227,19 @@ class _RidePageState extends State<RidePage> {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter a destination location';
                                     }
-
                                     if (value.length < 2) {
                                       return 'Must be more than 1 charater';
                                     }
                                     return null;
                                   },
                                   decoration: const InputDecoration(
-                                    hintText: 'Destination',
+                                    labelText: 'Destination',
+                                    prefixIcon: Icon(Icons.location_on),
                                   ),
                                   onChanged: (value) {
                                     if (value.length >= 2) {
                                       tempDestination = value;
                                     }
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
                                   },
                                 ),
                                 TextFormField(
@@ -260,7 +265,8 @@ class _RidePageState extends State<RidePage> {
                                   },
                                   keyboardType: TextInputType.datetime,
                                   decoration: const InputDecoration(
-                                    hintText: 'Time',
+                                    labelText: 'Time',
+                                    prefixIcon: Icon(Icons.access_time),
                                   ),
                                   onChanged: (value) {
                                     if (value.length == 5 &&
@@ -268,9 +274,6 @@ class _RidePageState extends State<RidePage> {
                                             value.contains(':'))) {
                                       tempTime = value;
                                     }
-
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
                                   },
                                 ),
                                 TextFormField(
@@ -297,7 +300,8 @@ class _RidePageState extends State<RidePage> {
                                   },
                                   keyboardType: TextInputType.number,
                                   decoration: const InputDecoration(
-                                    hintText: 'Available Seats',
+                                    labelText: 'Available Seats',
+                                    prefixIcon: Icon(Icons.event_seat),
                                   ),
                                   onChanged: (value) {
                                     if (value.isNotEmpty &&
@@ -308,8 +312,8 @@ class _RidePageState extends State<RidePage> {
                                     } else {
                                       tempAvailableSeats = 0;
                                     }
-                                    // Update the post value
-                                    // You can store the value in a database or a state management solution
+                                    tempAvailableSeats =
+                                        int.tryParse(value) ?? 0;
                                   },
                                 ),
                               ],
@@ -322,16 +326,14 @@ class _RidePageState extends State<RidePage> {
                               },
                               child: const Text('Cancel'),
                             ),
-                            TextButton(
+                            ElevatedButton(
                               onPressed: () {
-                                // Check valid inputs
                                 if (tempName.isNotEmpty &&
                                     tempCarType.isNotEmpty &&
                                     tempDeparture.isNotEmpty &&
                                     tempDestination.isNotEmpty &&
                                     tempTime.isNotEmpty &&
                                     tempAvailableSeats > 0) {
-                                  // Add post if valid
                                   setState(() {
                                     postDescription = CarPoolPost(
                                       driverName: tempName,
@@ -345,14 +347,14 @@ class _RidePageState extends State<RidePage> {
                                   });
                                   Navigator.pop(context);
                                 } else {
-                                  // Show an error message
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: const Text('Error'),
                                         content: const Text(
-                                            'Please fill all fields with valid values.'),
+                                          'Please fill all fields with valid values.',
+                                        ),
                                         actions: [
                                           TextButton(
                                             onPressed: () {
@@ -373,7 +375,7 @@ class _RidePageState extends State<RidePage> {
                       },
                     );
                   },
-                  backgroundColor: (Colors.black),
+                  backgroundColor: Colors.black,
                   child: const Icon(Icons.add, size: 50),
                 ),
               ],
@@ -422,7 +424,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       onTap: onTap,
       selectedItemColor: Colors.black,
       //unselectedItemColor: Colors.grey,
-      items: [
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',

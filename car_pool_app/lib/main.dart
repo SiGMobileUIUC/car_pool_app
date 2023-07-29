@@ -45,6 +45,7 @@ class CarpoolApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.grey),
       title: 'CARPOOL APP',
       home: HomePage(),
       debugShowCheckedModeBanner: false,
