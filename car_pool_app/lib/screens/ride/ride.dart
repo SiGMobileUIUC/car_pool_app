@@ -135,6 +135,9 @@ class _RidePageState extends State<RidePage> {
                             child: Column(
                               children: [
                                 TextFormField(
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(20),
+                                  ],
                                   autovalidateMode: AutovalidateMode.always,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -158,6 +161,9 @@ class _RidePageState extends State<RidePage> {
                                   },
                                 ),
                                 TextFormField(
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(10),
+                                  ],
                                   autovalidateMode: AutovalidateMode.always,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -181,6 +187,9 @@ class _RidePageState extends State<RidePage> {
                                   },
                                 ),
                                 TextFormField(
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(30),
+                                  ],
                                   autovalidateMode: AutovalidateMode.always,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -195,12 +204,17 @@ class _RidePageState extends State<RidePage> {
                                     hintText: 'Departure',
                                   ),
                                   onChanged: (value) {
-                                    tempDeparture = value;
+                                    if (value.length >= 2) {
+                                      tempDeparture = value;
+                                    }
                                     // Update the post value
                                     // You can store the value in a database or a state management solution
                                   },
                                 ),
                                 TextFormField(
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(30),
+                                  ],
                                   autovalidateMode: AutovalidateMode.always,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -216,7 +230,9 @@ class _RidePageState extends State<RidePage> {
                                     hintText: 'Destination',
                                   ),
                                   onChanged: (value) {
-                                    tempDestination = value;
+                                    if (value.length >= 2) {
+                                      tempDestination = value;
+                                    }
                                     // Update the post value
                                     // You can store the value in a database or a state management solution
                                   },
@@ -225,14 +241,20 @@ class _RidePageState extends State<RidePage> {
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(RegExp(
                                         r'^(?:[01]?\d|2[0-3])(?::(?:[0-5]\d?)?)?$')),
+                                    LengthLimitingTextInputFormatter(5),
                                   ],
                                   autovalidateMode: AutovalidateMode.always,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter a time of departure';
                                     }
-                                    if (value.length < 2) {
-                                      return 'Must be more than 1 charater';
+                                    if (isNumeric(value) ||
+                                        value.contains(':')) {
+                                    } else {
+                                      return 'Must be a number or colon';
+                                    }
+                                    if (value.length != 5) {
+                                      return 'Must be 5 charaters in 24hr format';
                                     }
                                     return null;
                                   },
@@ -241,23 +263,35 @@ class _RidePageState extends State<RidePage> {
                                     hintText: 'Time',
                                   ),
                                   onChanged: (value) {
-                                    tempTime = value;
+                                    if (value.length == 5 &&
+                                        (isNumeric(value) ||
+                                            value.contains(':'))) {
+                                      tempTime = value;
+                                    }
+
                                     // Update the post value
                                     // You can store the value in a database or a state management solution
                                   },
                                 ),
                                 TextFormField(
+                                  inputFormatters: <TextInputFormatter>[
+                                    LengthLimitingTextInputFormatter(2),
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  ],
                                   autovalidateMode: AutovalidateMode.always,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter an amount of available seats';
                                     }
                                     if (isNumeric(value)) {
+                                      if (int.parse(value) < 1) {
+                                        return 'Must be more than 0 seats';
+                                      }
+                                      if (int.parse(value) > 30) {
+                                        return 'Must be less than 30 seats';
+                                      }
                                     } else {
                                       return 'Must be a number';
-                                    }
-                                    if (value.length < 2) {
-                                      return 'Must be more than 1 charater';
                                     }
                                     return null;
                                   },
@@ -266,7 +300,10 @@ class _RidePageState extends State<RidePage> {
                                     hintText: 'Available Seats',
                                   ),
                                   onChanged: (value) {
-                                    if (isNumeric(value)) {
+                                    if (value.isNotEmpty &&
+                                        isNumeric(value) &&
+                                        int.parse(value) >= 1 &&
+                                        int.parse(value) <= 30) {
                                       tempAvailableSeats = int.parse(value);
                                     } else {
                                       tempAvailableSeats = 0;
