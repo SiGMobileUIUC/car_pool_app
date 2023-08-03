@@ -1,10 +1,10 @@
 import 'package:car_pool_app/screens/account/account.dart';
 import 'package:flutter/material.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:car_pool_app/screens/frontpage.dart';
 import '../homepage.dart';
 import 'package:car_pool_app/CarpoolPostClass.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:car_pool_app/screens/ride/ride_functions.dart';
 import 'package:flutter/services.dart';
 
@@ -15,6 +15,7 @@ class RidePage extends StatefulWidget {
 }
 
 class _RidePageState extends State<RidePage> {
+
   int currentIndex = 1; // Added currentIndex variable
   CarPoolPost postDescription = CarPoolPost(
     driverName: 'Loading...',
@@ -324,6 +325,9 @@ class _RidePageState extends State<RidePage> {
                               onPressed: () {
                                 Navigator.pop(context);
                               },
+                              style: TextButton.styleFrom(
+                                primary: Colors.black, 
+                              ),
                               child: const Text('Cancel'),
                             ),
                             ElevatedButton(
@@ -368,6 +372,9 @@ class _RidePageState extends State<RidePage> {
                                   );
                                 }
                               },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.black, 
+                              ),
                               child: const Text('Post'),
                             ),
                           ],
