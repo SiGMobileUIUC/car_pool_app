@@ -1,7 +1,6 @@
 import 'package:car_pool_app/screens/account/account.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:car_pool_app/screens/frontpage.dart';
 import '../homepage.dart';
 import 'package:car_pool_app/CarpoolPostClass.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +14,9 @@ class RidePage extends StatefulWidget {
 }
 
 class _RidePageState extends State<RidePage> {
+  // initialize instance
+  final CollectionReference posts =
+      FirebaseFirestore.instance.collection('posts');
 
   int currentIndex = 1; // Added currentIndex variable
   CarPoolPost postDescription = CarPoolPost(
@@ -56,66 +58,99 @@ class _RidePageState extends State<RidePage> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: postings.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title: Text(
-                        '${postings[index].departure} to ${postings[index].destination}'),
-                    subtitle: Text(
-                      'Time: ${postings[index].time}\nAvailable Seats: ${postings[index].availableSeats}',
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                            'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}'),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.delete,
-                            size: 15,
-                            color: Colors.black,
+            child: StreamBuilder<QuerySnapshot>(
+              stream: posts.snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                // Check if data is available and the document list is not empty
+                if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                  // Map the documents to CarPoolPost factors
+                  postings = snapshot.data!.docs.map((doc) {
+                    return CarPoolPost(
+                      driverName: doc['driverName'],
+                      carType: doc['carType'],
+                      departure: doc['departure'],
+                      destination: doc['destination'],
+                      time: doc['time'],
+                      availableSeats: doc['availableSeats'],
+                    );
+                  }).toList();
+
+                  return ListView.builder(
+                    itemCount: postings.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(
+                            '${postings[index].departure} to ${postings[index].destination}',
                           ),
-                          onPressed: () {
-                            // Show a confirmation message
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Delete Post'),
-                                  content: const Text(
-                                      'Are you sure you want to delete this post?'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(
-                                            context); // Close confirmation message
-                                      },
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          // Remove the post
-                                          postings.removeAt(index);
-                                        });
-                                        Navigator.pop(
-                                            context); // Close confirmation message
-                                      },
-                                      child: const Text('Delete'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
+                          subtitle: Text(
+                            'Time: ${postings[index].time}\nAvailable Seats: ${postings[index].availableSeats}',
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Car Type: ${postings[index].carType}\nDriver: ${postings[index].driverName}',
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  size: 15,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  // Show a confirmation message
+                                  // Delete the post from Firestore
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Delete Post'),
+                                        content: const Text(
+                                          'Are you sure you want to delete this post?',
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(
+                                                context,
+                                              ); // Close confirmation message
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              // Delete the post from Firestore
+                                              await posts
+                                                  .doc(snapshot
+                                                      .data!.docs[index].id)
+                                                  .delete();
+                                              Navigator.pop(
+                                                context,
+                                              ); // Close confirmation message
+                                            },
+                                            child: const Text('Delete'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                );
+                      );
+                    },
+                  );
+                } else {
+                  // If no data or the document list is empty, show a message
+                  return const Center(child: Text('No posts found'));
+                }
               },
             ),
           ),
@@ -326,29 +361,44 @@ class _RidePageState extends State<RidePage> {
                                 Navigator.pop(context);
                               },
                               style: TextButton.styleFrom(
-                                primary: Colors.black, 
+                                primary: Colors.black,
                               ),
                               child: const Text('Cancel'),
                             ),
                             ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (tempName.isNotEmpty &&
                                     tempCarType.isNotEmpty &&
                                     tempDeparture.isNotEmpty &&
                                     tempDestination.isNotEmpty &&
                                     tempTime.isNotEmpty &&
                                     tempAvailableSeats > 0) {
-                                  setState(() {
-                                    postDescription = CarPoolPost(
-                                      driverName: tempName,
-                                      carType: tempCarType,
-                                      departure: tempDeparture,
-                                      destination: tempDestination,
-                                      time: tempTime,
-                                      availableSeats: tempAvailableSeats,
-                                    );
-                                    postings.add(postDescription);
-                                  });
+                                  //setState(() {
+                                  postDescription = CarPoolPost(
+                                    driverName: tempName,
+                                    carType: tempCarType,
+                                    departure: tempDeparture,
+                                    destination: tempDestination,
+                                    time: tempTime,
+                                    availableSeats: tempAvailableSeats,
+                                  );
+                                  postings.add(postDescription);
+                                  //});
+
+                                  // Save the new post to Firestore
+                                  try {
+                                    await posts.add({
+                                      'driverName': tempName,
+                                      'carType': tempCarType,
+                                      'departure': tempDeparture,
+                                      'destination': tempDestination,
+                                      'time': tempTime,
+                                      'availableSeats': tempAvailableSeats,
+                                    });
+                                  } catch (e) {
+                                    print('Error saving post: $e');
+                                  }
+
                                   Navigator.pop(context);
                                 } else {
                                   showDialog(
@@ -373,7 +423,7 @@ class _RidePageState extends State<RidePage> {
                                 }
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.black, 
+                                primary: Colors.black,
                               ),
                               child: const Text('Post'),
                             ),
